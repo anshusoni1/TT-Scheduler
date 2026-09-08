@@ -1,0 +1,58 @@
+{
+  "academic_year": "2026-2027",
+  "calendar_title": "Fall 2026 Academic Calendar",
+  "effective_from": "2026-08-01",
+  "effective_to": "2026-12-15",
+  "confidence": 0.94,
+  "warnings": [],
+  "events": [
+    {
+      "event_date": "2026-08-01",
+      "event_type": "special_event",
+      "title": "Semester Registration & Orientation",
+      "description": "Academic registration opens for 3rd year students",
+      "is_teaching_day": false,
+      "is_holiday": false
+    },
+    {
+      "event_date": "2026-08-15",
+      "event_type": "holiday",
+      "title": "Independence Day",
+      "description": "National Holiday - College closed",
+      "is_teaching_day": false,
+      "is_holiday": true
+    },
+    {
+      "event_date": "2026-09-05",
+      "event_type": "special_teaching_day",
+      "title": "Teachers Day Special Schedule",
+      "description": "Monday timetable will be observed on Saturday",
+      "is_teaching_day": true,
+      "is_holiday": false
+    },
+    {
+      "event_date": "2026-10-02",
+      "event_type": "holiday",
+      "title": "Mahatma Gandhi Jayanti",
+      "description": "Gazetted Holiday",
+      "is_teaching_day": false,
+      "is_holiday": true
+    },
+    {
+      "event_date": "2026-10-12",
+      "event_type": "exam",
+      "title": "Mid-Semester Examinations Day 1",
+      "description": "Morning session: DBMS, Afternoon session: OS",
+      "is_teaching_day": false,
+      "is_holiday": false
+    },
+    {
+      "event_date": "2026-12-01",
+      "event_type": "exam",
+      "title": "End-Semester Practical Examinations",
+      "description": "Departmental Lab Examinations",
+      "is_teaching_day": false,
+      "is_holiday": false
+    }
+  ]
+}

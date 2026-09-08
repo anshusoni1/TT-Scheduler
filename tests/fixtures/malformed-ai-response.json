@@ -1,0 +1,12 @@
+{
+  "academic_year": "2026",
+  "entries": [
+    {
+      "day_of_week": "invalid_day",
+      "start_time": "25:99",
+      "end_time": "08:00",
+      "subject_name": ""
+    }
+  ],
+  "confidence_score": "not-a-number"
+}

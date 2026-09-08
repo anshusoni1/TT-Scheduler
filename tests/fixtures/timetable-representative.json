@@ -1,0 +1,66 @@
+{
+  "academic_year": "2026-2027",
+  "semester": 5,
+  "section": "CSE-A",
+  "branch": "Computer Science",
+  "timetable_title": "Fall 2026 CSE Timetable",
+  "confidence": 0.96,
+  "warnings": [],
+  "entries": [
+    {
+      "day_of_week": "monday",
+      "start_time": "09:00",
+      "end_time": "10:00",
+      "subject_name": "Database Management Systems",
+      "subject_code": "CS301",
+      "faculty_name": "Dr. R. K. Sharma",
+      "room": "LH-101",
+      "class_type": "lecture",
+      "section": "CSE-A"
+    },
+    {
+      "day_of_week": "monday",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "subject_name": "Computer Networks",
+      "subject_code": "CS302",
+      "faculty_name": "Prof. S. Gupta",
+      "room": "LH-101",
+      "class_type": "lecture",
+      "section": "CSE-A"
+    },
+    {
+      "day_of_week": "monday",
+      "start_time": "11:15",
+      "end_time": "13:15",
+      "subject_name": "Database Lab",
+      "subject_code": "CS301L",
+      "faculty_name": "Dr. R. K. Sharma & TAs",
+      "room": "Computing Lab 3",
+      "class_type": "lab",
+      "section": "CSE-A"
+    },
+    {
+      "day_of_week": "tuesday",
+      "start_time": "09:00",
+      "end_time": "10:00",
+      "subject_name": "Operating Systems",
+      "subject_code": "CS303",
+      "faculty_name": "Dr. A. Verma",
+      "room": "LH-102",
+      "class_type": "lecture",
+      "section": "CSE-A"
+    },
+    {
+      "day_of_week": "wednesday",
+      "start_time": "14:00",
+      "end_time": "15:00",
+      "subject_name": "Algorithms Tutorial",
+      "subject_code": "CS304T",
+      "faculty_name": "Mr. K. Nair",
+      "room": "TR-4",
+      "class_type": "tutorial",
+      "section": "CSE-A"
+    }
+  ]
+}

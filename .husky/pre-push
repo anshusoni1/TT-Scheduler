@@ -1,0 +1,33 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "======================================"
+echo "🛡️ SECURITY CHECK: PRE-PUSH HOOK"
+echo "======================================"
+
+# 1. Simple regex to prevent committing obvious keys (heuristic)
+echo "Checking for hardcoded secrets..."
+if git diff --cached -S "AIza[0-9A-Za-z-_]{35}" --quiet; then
+  echo "✅ No Gemini API keys found."
+else
+  echo "❌ ERROR: Potential Gemini API key found in commit."
+  exit 1
+fi
+
+if git diff --cached -S "sb-[0-9a-z]{10,20}-[0-9a-z]{10,20}" --quiet; then
+  echo "✅ No Supabase keys found."
+else
+  echo "❌ ERROR: Potential Supabase key found in commit."
+  exit 1
+fi
+
+# 2. Run typecheck and lint
+echo "Running typecheck and linting..."
+npm run typecheck && npm run lint
+
+if [ $? -ne 0 ]; then
+  echo "❌ ERROR: Code quality checks failed."
+  exit 1
+fi
+
+echo "✅ All security and quality checks passed!"

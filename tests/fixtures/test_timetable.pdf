@@ -1,0 +1,28 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >> >>
+endobj
+4 0 obj
+<< /Length 908 >>
+stream
+BT /F1 12 Tf 50 750 Td 15 TL (INDIAN INSTITUTE OF TECHNOLOGY - DEPARTMENT OF COMPUTER SCIENCE) ' (CLASS TIME TABLE - AUTUMN SEMESTER 2026-2027) ' (SECTION: CSE-3A | ROOM: LH-101 | SEMESTER: V) ' (========================================================================) ' (DAY       09:00 - 10:00        10:00 - 11:00        11:15 - 13:15 \(Lab\)) ' (------------------------------------------------------------------------) ' (Monday    CS301: DBMS \(Dr. Rao\) CS302: CN \(Prof. Gupta\) CS301L: Database Lab) ' (Tuesday   CS303: OS \(Dr. Verma\) CS304: AI \(Dr. Sen\)   CS303L: OS Lab) ' (Wednesday CS301: DBMS \(Dr. Rao\) CS305: SE \(Prof. Roy\)  Free) ' (Thursday  CS302: CN \(Prof. Gupta\) CS303: OS \(Dr. Verma\) CS302L: Network Lab) ' (Friday    CS304: AI \(Dr. Sen\)   CS301: DBMS \(Dr. Rao\) Sports / Extra-Curricular) ' (========================================================================) ' ET
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000010 00000 n 
+0000000060 00000 n 
+0000000117 00000 n 
+0000000280 00000 n 
+trailer
+<< /Size 5 /Root 1 0 R >>
+startxref
+1248
+%%EOF

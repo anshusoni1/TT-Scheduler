@@ -1,0 +1,45 @@
+{
+  "name": "classflow",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@google/genai": "^2.21.0",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.49.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "lucide-react": "^1.16.0",
+    "next": "^15.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "undici": "^8.10.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@types/node": "^22.13.9",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.21.0",
+    "eslint-config-next": "^15.2.1",
+    "husky": "^9.1.7",
+    "postcss": "^8.5.3",
+    "puppeteer": "^25.10.0",
+    "tailwindcss": "^3.4.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}

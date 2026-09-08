@@ -1,0 +1,26 @@
+{
+  "academic_year": null,
+  "semester": null,
+  "section": null,
+  "branch": null,
+  "timetable_title": "Unclear Timetable Scan",
+  "confidence": 0.52,
+  "warnings": [
+    "Faculty names and room numbers could not be detected from blurred scan",
+    "Section header was partially occluded",
+    "Confidence is below 0.70; manual verification recommended"
+  ],
+  "entries": [
+    {
+      "day_of_week": "monday",
+      "start_time": "10:00",
+      "end_time": "11:00",
+      "subject_name": "Maths",
+      "subject_code": null,
+      "faculty_name": null,
+      "room": null,
+      "class_type": "lecture",
+      "section": null
+    }
+  ]
+}
