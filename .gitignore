@@ -33,3 +33,4 @@ secrets
 next-env.d.ts
 .env*
 supabase/.temp/
+gemini_debug.json
