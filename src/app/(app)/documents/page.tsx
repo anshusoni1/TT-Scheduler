@@ -264,44 +264,6 @@ export default function DocumentsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-      {/* Top Navigation */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30 px-6 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm">
-            <FileText className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-              ClassFlow Import
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Multimodal Timetable & Calendar Document Processing
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          <Link
-            href="/dashboard"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/timetable"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            Timetable
-          </Link>
-          <Link
-            href="/calendar"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            Calendar
-          </Link>
-        </div>
-      </header>
-
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
         {/* Notifications */}
         {error && (

@@ -93,77 +93,66 @@ export default function WeeklySchedulePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-      {/* Top Header */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30 px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/dashboard"
-            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
-            title="Return to Dashboard"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-          <div className="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm">
-            <BookOpen className="h-5 w-5" />
-          </div>
+      {/* Main Content */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+        
+        {/* Page Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
           <div>
-            <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">
               Weekly Schedule
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
               Deterministic Academic Timetable & Calendar Synthesis
             </p>
           </div>
-        </div>
 
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
-                viewMode === 'grid'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-              }`}
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
+                  viewMode === 'grid'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <Grid className="h-3.5 w-3.5" />
+                <span>Grid</span>
+              </button>
+              <button
+                onClick={() => setViewMode('cards')}
+                className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
+                  viewMode === 'cards'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <List className="h-3.5 w-3.5" />
+                <span>Cards</span>
+              </button>
+            </div>
+
+            <a
+              href={`/api/schedule/export?from=${startOfWeek}&to=${endOfWeek}`}
+              download={`classflow-schedule-${startOfWeek}-to-${endOfWeek}.ics`}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors"
+              title="Download iCalendar for this week"
             >
-              <Grid className="h-3.5 w-3.5" />
-              <span>Grid</span>
-            </button>
-            <button
-              onClick={() => setViewMode('cards')}
-              className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg transition-colors ${
-                viewMode === 'cards'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-              }`}
+              <Download className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Export Week</span>
+            </a>
+
+            <Link
+              href="/timetable"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors"
             >
-              <List className="h-3.5 w-3.5" />
-              <span>Cards</span>
-            </button>
+              <Plus className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Edit Slots</span>
+            </Link>
           </div>
-
-          <a
-            href={`/api/schedule/export?from=${startOfWeek}&to=${endOfWeek}`}
-            download={`classflow-schedule-${startOfWeek}-to-${endOfWeek}.ics`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors"
-            title="Download iCalendar for this week"
-          >
-            <Download className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Export Week</span>
-          </a>
-
-          <Link
-            href="/timetable"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-xs transition-colors"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Edit Slots</span>
-          </Link>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Navigation Toolbar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
           <div className="flex flex-wrap items-center gap-2">

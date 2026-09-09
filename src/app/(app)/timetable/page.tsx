@@ -217,79 +217,59 @@ export default function TimetablePage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
       {/* Top Header */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30 px-6 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/dashboard"
-            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            title="Back to Dashboard"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-          <div className="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm">
-            <BookOpen className="h-5 w-5" />
-          </div>
+      {/* Main Content Area */}
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+        {/* Page Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-              ClassFlow Timetable
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+              Timetables
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
               Manual Timetable Management & Schedule Registry
             </p>
           </div>
-        </div>
 
-        <div className="flex items-center gap-3">
-          {timetables.length > 1 && activeTimetable && (
-            <select
-              value={activeTimetable.id}
-              onChange={(e) => {
-                const found = timetables.find((t) => t.id === e.target.value);
-                if (found) setActiveTimetable(found);
-              }}
-              className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium"
+          <div className="flex flex-wrap items-center gap-3">
+            {timetables.length > 1 && activeTimetable && (
+              <select
+                value={activeTimetable.id}
+                onChange={(e) => {
+                  const found = timetables.find((t) => t.id === e.target.value);
+                  if (found) setActiveTimetable(found);
+                }}
+                className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium"
+              >
+                {timetables.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name} {t.active ? '(Active)' : ''}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            <a
+              href="/api/schedule/export"
+              download="classflow-schedule.ics"
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
+              title="Download iCalendar format (.ics)"
             >
-              {timetables.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name} {t.active ? '(Active)' : ''}
-                </option>
-              ))}
-            </select>
-          )}
-          <Link
-            href="/documents"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <FileText className="h-3.5 w-3.5 text-blue-600" />
-            <span>AI Documents</span>
-          </Link>
-          <Link
-            href="/dashboard"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            Dashboard
-          </Link>
-          <a
-            href="/api/schedule/export"
-            download="classflow-schedule.ics"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-            title="Download iCalendar format (.ics)"
-          >
-            <Download className="h-3.5 w-3.5 text-indigo-600" />
-            <span className="hidden sm:inline">Export .ICS</span>
-          </a>
-          <button
-            onClick={() => setShowNewTimetableModal(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-sm"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span>New Timetable</span>
-          </button>
+              <Download className="h-3.5 w-3.5 text-indigo-600" />
+              <span className="hidden sm:inline">Export .ICS</span>
+            </a>
+            
+            <button
+              onClick={() => setShowNewTimetableModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-sm"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>New Timetable</span>
+            </button>
+          </div>
         </div>
-      </header>
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+
+
         {/* Banner Messages */}
         {errorBanner && (
           <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-sm flex items-start justify-between gap-2 shadow-sm">

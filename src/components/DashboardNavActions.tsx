@@ -35,14 +35,7 @@ export function DashboardNavActions() {
           </kbd>
         </button>
 
-        {/* AI Assistant Link */}
-        <Link
-          href="/assistant"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-200 dark:border-purple-800/60 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/60 text-purple-700 dark:text-purple-300 text-xs font-medium transition-colors"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-          <span className="hidden sm:inline">AI Assistant</span>
-        </Link>
+
 
         {/* Settings Link */}
         <Link

@@ -412,108 +412,89 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
       {/* Top Header */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30 px-6 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/dashboard"
-            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            title="Back to Dashboard"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Link>
-          <div className="h-9 w-9 rounded-xl bg-purple-600 flex items-center justify-center text-white font-bold shadow-sm">
-            <CalendarIcon className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-              Academic Calendar & Schedule Overrides
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Institutional Events, Holidays & Date Exceptions
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {calendars.length > 1 && activeCalendar && (
-            <select
-              value={activeCalendar.id}
-              onChange={(e) => {
-                const found = calendars.find((c) => c.id === e.target.value);
-                if (found) setActiveCalendar(found);
-              }}
-              className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium"
-            >
-              {calendars.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name} {c.active ? '(Active)' : ''}
-                </option>
-              ))}
-            </select>
-          )}
-
-          <div className="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-0.5">
-            <button
-              onClick={() => setViewMode('month')}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
-                viewMode === 'month'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <Grid className="h-3.5 w-3.5" />
-              <span>Month</span>
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
-                viewMode === 'list'
-                  ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <List className="h-3.5 w-3.5" />
-              <span>Events</span>
-            </button>
-          </div>
-
-          <Link
-            href="/documents"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <FileText className="h-3.5 w-3.5 text-purple-600" />
-            <span>AI Documents</span>
-          </Link>
-
-          <button
-            onClick={() => setShowCreateCalendarModal(true)}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium transition-colors"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">New Calendar</span>
-          </button>
-
-          {activeCalendar && (
-            <button
-              onClick={() => {
-                setEditingEvent(null);
-                setEvDate(selectedDate);
-                handleEventTypeChange('holiday');
-                setEvTitle('');
-                setEvDesc('');
-                setShowAddEventModal(true);
-              }}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium transition-colors shadow-sm"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Add Event</span>
-            </button>
-          )}
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+        
+        {/* Page Actions & View Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+              Calendar
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Manage institutional events, holidays, and schedule exceptions
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {calendars.length > 1 && activeCalendar && (
+              <select
+                value={activeCalendar.id}
+                onChange={(e) => {
+                  const found = calendars.find((c) => c.id === e.target.value);
+                  if (found) setActiveCalendar(found);
+                }}
+                className="text-xs px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium"
+              >
+                {calendars.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name} {c.active ? '(Active)' : ''}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            <div className="inline-flex rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-0.5">
+              <button
+                onClick={() => setViewMode('month')}
+                className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                  viewMode === 'month'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <Grid className="h-3.5 w-3.5" />
+                <span>Month</span>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                  viewMode === 'list'
+                    ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xs'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <List className="h-3.5 w-3.5" />
+                <span>Events</span>
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowCreateCalendarModal(true)}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-medium transition-colors"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">New Calendar</span>
+            </button>
+
+            {activeCalendar && (
+              <button
+                onClick={() => {
+                  setEditingEvent(null);
+                  setEvDate(selectedDate);
+                  handleEventTypeChange('holiday');
+                  setEvTitle('');
+                  setEvDesc('');
+                  setShowAddEventModal(true);
+                }}
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-sm"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                <span>Add Event</span>
+              </button>
+            )}
+          </div>
+        </div>
         {/* Banner Messages */}
         {errorBanner && (
           <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-sm flex items-start justify-between gap-2 shadow-sm">

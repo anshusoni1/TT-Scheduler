@@ -27,10 +27,9 @@ export default async function DashboardPage() {
   const profilesRepo = new ProfilesRepository(supabase);
 
   // Fetch real database records and execute deterministic schedule engine
-  const [profile, todaySchedule, attendance] = await Promise.all([
+  const [profile, todaySchedule] = await Promise.all([
     profilesRepo.getProfile(user.id),
     SchedulingService.getTodaySchedule(supabase, user.id),
-    SchedulingService.calculateAttendanceAnalytics(supabase, user.id, 75).catch(() => null),
   ]);
 
   const studentName = profile?.name || user.user_metadata?.name || 'Student';
@@ -39,84 +38,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-      {/* Top Navigation Bar */}
-      <header className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-30 px-6 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold shadow-sm">
-            <BookOpen className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-              ClassFlow
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Deterministic Academic Schedule Hub
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link
-            href="/documents"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <FileText className="h-3.5 w-3.5 text-blue-600" />
-            <span>AI Documents</span>
-          </Link>
-
-          <Link
-            href="/calendar"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <CalendarDays className="h-3.5 w-3.5 text-purple-600" />
-            <span>Calendar</span>
-          </Link>
-
-          <Link
-            href="/schedule"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <Calendar className="h-3.5 w-3.5 text-emerald-600" />
-            <span>Weekly Schedule</span>
-          </Link>
-
-          <Link
-            href="/attendance"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <BarChart3 className="h-3.5 w-3.5 text-amber-600" />
-            <span>Attendance</span>
-          </Link>
-
-          <Link
-            href="/timetable"
-            className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5"
-          >
-            <Calendar className="h-3.5 w-3.5 text-indigo-600" />
-            <span>Timetable Slots</span>
-          </Link>
-
-          <div className="text-right hidden sm:block">
-            <div className="text-xs font-semibold text-slate-800 dark:text-slate-200">{studentName}</div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400">
-              {college ? college : timezone}
-            </div>
-          </div>
-
-          <DashboardNavActions />
-
-          <form action={signOutAction}>
-            <button
-              type="submit"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors"
-            >
-              <LogOut className="h-3.5 w-3.5" />
-              <span>Sign Out</span>
-            </button>
-          </form>
-        </div>
-      </header>
-
       {/* Main Content Area */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
         {/* Welcome & Timezone Status Banner */}
@@ -520,138 +441,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Semester Attendance Analytics & Safe Cuts Widget */}
-        <div className="mt-8 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
-                <BarChart3 className="h-5 w-5" />
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                  Semester Attendance & Safe Cuts Margin
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Target threshold: <span className="font-semibold text-indigo-600 dark:text-indigo-400">75% attendance</span> across synthesized calendar dates
-                </p>
-              </div>
-            </div>
 
-            <a
-              href="/api/schedule/export"
-              download="classflow-schedule.ics"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors self-start sm:self-center"
-            >
-              <Download className="h-3.5 w-3.5" />
-              <span>Export Semester .ICS</span>
-            </a>
-          </div>
-
-          {attendance && attendance.subjects.length > 0 ? (
-            <div className="space-y-6">
-              {/* Semester KPI Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Teaching Days</div>
-                  <div className="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5">{attendance.total_teaching_days}</div>
-                  <div className="text-[10px] text-slate-400">Institutional days</div>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Academic Holidays</div>
-                  <div className="text-xl font-extrabold text-rose-600 dark:text-rose-400 mt-0.5">{attendance.total_holidays}</div>
-                  <div className="text-[10px] text-slate-400">Classes suspended</div>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Scheduled</div>
-                  <div className="text-xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">{attendance.total_classes_semester}</div>
-                  <div className="text-[10px] text-slate-400">Lectures & labs</div>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800">
-                  <div className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Held To Date</div>
-                  <div className="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5">{attendance.classes_held_to_date}</div>
-                  <div className="text-[10px] text-slate-400">Elapsed sessions</div>
-                </div>
-              </div>
-
-              {/* Subject Breakdown Table */}
-              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 font-semibold border-b border-slate-200 dark:border-slate-800">
-                    <tr>
-                      <th className="py-3 px-4">Subject</th>
-                      <th className="py-3 px-3 text-center">Semester Total</th>
-                      <th className="py-3 px-3 text-center">Held to Date</th>
-                      <th className="py-3 px-3 text-center">Remaining</th>
-                      <th className="py-3 px-3 text-center">Min to Attend (75%)</th>
-                      <th className="py-3 px-4 text-right">Safe Cuts Allowed</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                    {attendance.subjects.map((sub) => (
-                      <tr key={sub.subject_name} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
-                        <td className="py-3 px-4">
-                          <div className="font-bold text-slate-900 dark:text-white">{sub.subject_name}</div>
-                          {sub.subject_code && (
-                            <span className="font-mono text-[10px] text-slate-400">{sub.subject_code}</span>
-                          )}
-                        </td>
-                        <td className="py-3 px-3 text-center font-medium text-slate-700 dark:text-slate-300">
-                          {sub.total_scheduled}
-                        </td>
-                        <td className="py-3 px-3 text-center text-slate-600 dark:text-slate-400">
-                          {sub.classes_held_to_date}
-                        </td>
-                        <td className="py-3 px-3 text-center text-slate-600 dark:text-slate-400">
-                          {sub.remaining_classes}
-                        </td>
-                        <td className="py-3 px-3 text-center font-semibold text-indigo-600 dark:text-indigo-400">
-                          {sub.minimum_classes_needed}
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <span
-                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold text-xs ${
-                              sub.safe_cuts_allowance > 3
-                                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900'
-                                : sub.safe_cuts_allowance > 0
-                                ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900'
-                                : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900'
-                            }`}
-                          >
-                            <CheckCircle2 className="h-3 w-3" />
-                            <span>{sub.safe_cuts_allowance} cuts</span>
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ) : (
-            <div className="p-6 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-center">
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                To calculate semester attendance and safe cut allowances, ensure you have an active timetable and an academic calendar configured with semester start/end dates.
-              </p>
-              <div className="flex justify-center gap-3 mt-3">
-                <Link
-                  href="/timetable"
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Configure Timetable →
-                </Link>
-                <Link
-                  href="/calendar"
-                  className="text-xs font-semibold text-purple-600 hover:text-purple-500"
-                >
-                  Configure Calendar →
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
       </main>
 
       {/* Footer */}

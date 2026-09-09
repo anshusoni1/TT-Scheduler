@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AIAssistantFAB } from '@/components/AIAssistantFAB';
 
 export const metadata: Metadata = {
   title: 'ClassFlow | Academic Schedule & Timetable Intelligence',
@@ -15,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
         {children}
+        <AIAssistantFAB />
       </body>
     </html>
   );
