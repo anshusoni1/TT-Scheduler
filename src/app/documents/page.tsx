@@ -22,6 +22,14 @@ import {
 import type { DocumentWithJob } from '@/server/repositories/documents.repository';
 import type { DocumentType } from '@/lib/constants/extraction';
 
+const processingMessages = [
+  "Uploading document…",
+  "Reading document layout…",
+  "Finding subjects and class times…",
+  "Matching schedule details…",
+  "Preparing your schedule…"
+];
+
 export default function DocumentsPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -29,6 +37,20 @@ export default function DocumentsPage() {
   const [documents, setDocuments] = useState<DocumentWithJob[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadFileName, setUploadFileName] = useState<string | null>(null);
+  const [processingMessageIndex, setProcessingMessageIndex] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (uploading) {
+      setProcessingMessageIndex(0);
+      interval = setInterval(() => {
+        setProcessingMessageIndex((prev) => Math.min(prev + 1, processingMessages.length - 1));
+      }, 3000);
+    }
+    return () => clearInterval(interval);
+  }, [uploading]);
+
   const [dragActive, setDragActive] = useState(false);
   const [selectedDocType, setSelectedDocType] = useState<DocumentType>('unknown');
   const [error, setError] = useState<string | null>(null);
@@ -112,18 +134,25 @@ export default function DocumentsPage() {
       if (!res.ok) {
         throw new Error(data.error?.message || 'Failed to upload document');
       }
-
-      setSuccess(`Document "${file.name}" uploaded and processed successfully!`);
-      fetchDocuments();
-
-      // Automatically navigate to review page if ready for review
-      if (data.data?.document?.id && data.data?.document?.processing_status === 'needs_review') {
-        router.push(`/documents/${data.data.document.id}/review`);
+      
+      const updatedDoc = (data.data as { document: DocumentWithJob }).document;
+      setSuccess(`Your schedule is ready.`);
+      
+      // Auto-navigate to review page
+      if (updatedDoc) {
+        router.push(`/documents/${updatedDoc.id}/review`);
       }
+      fetchDocuments();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Upload failed');
+      const errorMsg = err instanceof Error ? err.message : 'Upload failed';
+      if (errorMsg.includes('429') || errorMsg.toLowerCase().includes('rate limit') || errorMsg.includes('AI') || errorMsg.includes('Gemini') || errorMsg.includes('fetch')) {
+        setError("We're taking a little longer than usual. Please try again in a moment.");
+      } else {
+        setError(errorMsg);
+      }
     } finally {
       setUploading(false);
+      setUploadFileName(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -214,8 +243,8 @@ export default function DocumentsPage() {
         );
       case 'processing':
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300">
-            <Loader2 className="h-3 w-3 animate-spin" /> AI Analyzing...
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300">
+            <Loader2 className="h-3 w-3 animate-spin" /> Processing...
           </span>
         );
       case 'failed':
@@ -243,7 +272,7 @@ export default function DocumentsPage() {
           </div>
           <div>
             <h1 className="text-base font-bold text-slate-900 dark:text-white leading-tight">
-              ClassFlow AI Ingestion
+              ClassFlow Import
             </h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Multimodal Timetable & Calendar Document Processing
@@ -303,10 +332,10 @@ export default function DocumentsPage() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-slate-900 dark:text-white">
-                Human-in-the-Loop Security Architecture
+                Review before saving
               </h2>
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                AI extraction never directly modifies your schedule. Extracted data is presented for your review and editable before any database commit.
+                Your schedule won&apos;t change until you review and confirm the extracted details.
               </p>
             </div>
           </div>
@@ -334,7 +363,7 @@ export default function DocumentsPage() {
                 onChange={(e) => setSelectedDocType(e.target.value as DocumentType)}
                 className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="unknown">Auto-Detect via AI</option>
+                <option value="unknown">Auto-Detect</option>
                 <option value="timetable">Timetable (Weekly Classes)</option>
                 <option value="calendar">Academic Calendar (Holidays/Terms)</option>
                 <option value="mixed">Combined / Mixed</option>
@@ -366,12 +395,14 @@ export default function DocumentsPage() {
             {uploading ? (
               <div className="flex flex-col items-center justify-center py-4">
                 <Loader2 className="h-10 w-10 text-indigo-600 animate-spin mb-3" />
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
-                  Uploading and analyzing document with Gemini AI...
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white transition-all duration-300">
+                  {processingMessages[processingMessageIndex]}
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  Extracting table layouts, class periods, and academic dates
-                </p>
+                {uploadFileName && (
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full">
+                    {uploadFileName}
+                  </p>
+                )}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-4">
@@ -426,7 +457,7 @@ export default function DocumentsPage() {
               <FileText className="h-10 w-10 mx-auto text-slate-300 dark:text-slate-700 mb-3" />
               <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300">No documents uploaded yet</h3>
               <p className="text-xs mt-1 max-w-sm mx-auto">
-                Upload your college timetable or academic calendar above to start the automated AI extraction and review workflow.
+                Upload your college timetable or academic calendar above to start the automated processing and review workflow.
               </p>
             </div>
           ) : (
@@ -493,7 +524,7 @@ export default function DocumentsPage() {
                       <button
                         onClick={() => handleReprocess(doc.id)}
                         disabled={reprocessingId === doc.id || doc.processing_status === 'processing'}
-                        title="Re-run AI extraction"
+                        title="Re-analyze document"
                         className="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50 flex items-center gap-1 transition-colors"
                       >
                         <RefreshCw className={`h-3.5 w-3.5 ${reprocessingId === doc.id ? 'animate-spin' : ''}`} />

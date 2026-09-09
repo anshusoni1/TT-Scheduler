@@ -213,8 +213,7 @@ Return JSON in this EXACT schema:
 `;
 
     const rawText = await this.callGemini(buffer, mimeType, prompt);
-    require('fs').writeFileSync('gemini_debug.json', rawText);
-    console.log('[DEBUG] Gemini timetable extraction rawText written to gemini_debug.json');
+    // console.log('[DEBUG] Gemini timetable extraction completed.');
 
     try {
       const parsed = JSON.parse(rawText);
