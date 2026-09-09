@@ -487,7 +487,7 @@ export default function CalendarPage() {
                   setEvDesc('');
                   setShowAddEventModal(true);
                 }}
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-colors shadow-sm"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-coral-600 hover:bg-coral-700 text-white text-xs font-medium transition-colors shadow-sm"
               >
                 <Plus className="h-3.5 w-3.5" />
                 <span>Add Event</span>
@@ -522,13 +522,13 @@ export default function CalendarPage() {
 
         {loading ? (
           <div className="py-24 text-center flex flex-col items-center justify-center gap-3">
-            <Loader2 className="h-8 w-8 animate-spin text-purple-600" />
+            <Loader2 className="h-8 w-8 animate-spin text-coral-600" />
             <p className="text-sm text-slate-500">Loading academic calendar events from PostgreSQL...</p>
           </div>
         ) : !activeCalendar ? (
           /* Empty State: No Calendar */
           <div className="rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-800 p-8 sm:p-12 text-center bg-white/50 dark:bg-slate-900/50">
-            <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center mx-auto mb-4">
+            <div className="h-14 w-14 rounded-2xl bg-coral-50 dark:bg-coral-950/60 text-coral-600 dark:text-coral-400 flex items-center justify-center mx-auto mb-4">
               <CalendarIcon className="h-7 w-7" />
             </div>
             <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
@@ -539,7 +539,7 @@ export default function CalendarPage() {
             </p>
             <button
               onClick={() => setShowCreateCalendarModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium shadow-sm transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-coral-600 hover:bg-coral-700 text-white text-sm font-medium shadow-sm transition-colors"
             >
               <Plus className="h-4 w-4" />
               <span>Create Calendar</span>
@@ -550,8 +550,8 @@ export default function CalendarPage() {
             {/* Calendar Header Card */}
             <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 text-xs font-semibold mb-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-500"></span>
+                <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-coral-50 dark:bg-coral-950/60 text-coral-700 dark:text-coral-300 text-xs font-semibold mb-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-coral-500"></span>
                   Active Academic Calendar
                 </div>
                 <h2 className="text-xl font-bold text-slate-900 dark:text-white">
@@ -601,7 +601,7 @@ export default function CalendarPage() {
                     <span>Wed</span>
                     <span>Thu</span>
                     <span>Fri</span>
-                    <span className="text-indigo-600 dark:text-indigo-400">Sat</span>
+                    <span className="text-coral-600 dark:text-coral-400">Sat</span>
                     <span className="text-rose-500">Sun</span>
                   </div>
 
@@ -621,11 +621,11 @@ export default function CalendarPage() {
                           onClick={() => setSelectedDate(cell.dateString)}
                           className={`min-h-16 p-2 rounded-xl border text-left transition-all relative flex flex-col justify-between ${
                             isSelected
-                              ? 'border-purple-600 ring-2 ring-purple-500/20 bg-purple-50/50 dark:bg-purple-950/30'
+                              ? 'border-coral-600 ring-2 ring-coral-500/20 bg-coral-50/50 dark:bg-coral-950/30'
                               : hasHoliday
-                              ? 'border-rose-200 dark:border-rose-900/50 bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50'
+                              ? 'border-rose-200 dark:border-rose-900/50 bg-rose-50/40 dark:bg-rose-950/20 hover:bg-rose-50 dark:hover:bg-rose-900/40'
                               : isTeaching
-                              ? 'border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/30 dark:bg-emerald-950/20 hover:bg-emerald-50'
+                              ? 'border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/30 dark:bg-emerald-950/20 hover:bg-emerald-50 dark:hover:bg-emerald-900/40'
                               : cell.isCurrentMonth
                               ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850'
                               : 'border-slate-100 dark:border-slate-850 bg-slate-50/50 dark:bg-slate-900/40 text-slate-400 opacity-60'
@@ -635,7 +635,7 @@ export default function CalendarPage() {
                             <span
                               className={`text-xs font-bold ${
                                 isSelected
-                                  ? 'text-purple-600 dark:text-purple-400 font-extrabold'
+                                  ? 'text-coral-600 dark:text-coral-400 font-extrabold'
                                   : hasHoliday
                                   ? 'text-rose-600 dark:text-rose-400'
                                   : 'text-slate-800 dark:text-slate-200'
@@ -721,7 +721,7 @@ export default function CalendarPage() {
                             setEvDesc('');
                             setShowAddEventModal(true);
                           }}
-                          className="text-xs font-semibold text-purple-600 hover:text-purple-700 inline-flex items-center gap-1"
+                          className="text-xs font-semibold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1"
                         >
                           <Plus className="h-3 w-3" />
                           <span>Add</span>
@@ -893,7 +893,7 @@ export default function CalendarPage() {
                       setEvDesc('');
                       setShowAddEventModal(true);
                     }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-coral-600 hover:bg-coral-700 text-white text-xs font-semibold shadow-sm transition-colors"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Add Event</span>
@@ -1023,7 +1023,7 @@ export default function CalendarPage() {
                 <button
                   type="submit"
                   disabled={actionPending}
-                  className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-coral-600 hover:bg-coral-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5"
                 >
                   {actionPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                   <span>Save Calendar</span>
@@ -1120,7 +1120,7 @@ export default function CalendarPage() {
                     type="checkbox"
                     checked={evIsHoliday}
                     onChange={(e) => setEvIsHoliday(e.target.checked)}
-                    className="rounded text-purple-600"
+                    className="rounded text-coral-600"
                   />
                   <span>Official Non-Working Holiday (Suspends regular timetable)</span>
                 </label>
@@ -1130,7 +1130,7 @@ export default function CalendarPage() {
                     type="checkbox"
                     checked={evIsTeachingDay}
                     onChange={(e) => setEvIsTeachingDay(e.target.checked)}
-                    className="rounded text-purple-600"
+                    className="rounded text-coral-600"
                   />
                   <span>Teaching Day (Conducts lectures or labs)</span>
                 </label>
@@ -1140,7 +1140,7 @@ export default function CalendarPage() {
                     type="checkbox"
                     checked={evAffectsSchedule}
                     onChange={(e) => setEvAffectsSchedule(e.target.checked)}
-                    className="rounded text-purple-600"
+                    className="rounded text-coral-600"
                   />
                   <span>Affects regular timetable schedule</span>
                 </label>
@@ -1160,7 +1160,7 @@ export default function CalendarPage() {
                 <button
                   type="submit"
                   disabled={actionPending}
-                  className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-xl bg-coral-600 hover:bg-coral-700 text-white text-xs font-semibold shadow-sm flex items-center gap-1.5"
                 >
                   {actionPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                   <span>{editingEvent ? 'Update Event' : 'Save Event'}</span>

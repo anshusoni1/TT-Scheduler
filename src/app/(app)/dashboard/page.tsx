@@ -1,25 +1,18 @@
 import { AuthService } from '@/server/services/auth.service';
 import { ProfilesRepository } from '@/server/repositories/profiles.repository';
 import { SchedulingService } from '@/server/services/scheduling.service';
-import { signOutAction } from '@/app/auth/actions';
 import Link from 'next/link';
 import {
   Clock,
-  BookOpen,
   Calendar,
-  LogOut,
   CalendarCheck,
   CalendarX,
   Radio,
   ArrowRight,
   Plus,
   CalendarDays,
-  FileText,
   Download,
-  BarChart3,
-  CheckCircle2,
 } from 'lucide-react';
-import { DashboardNavActions } from '@/components/DashboardNavActions';
 
 export default async function DashboardPage() {
   const { user, supabase } = await AuthService.requireUser();
@@ -33,183 +26,161 @@ export default async function DashboardPage() {
   ]);
 
   const studentName = profile?.name || user.user_metadata?.name || 'Student';
-  const college = profile?.college || null;
   const timezone = profile?.timezone || 'Asia/Kolkata';
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-        {/* Welcome & Timezone Status Banner */}
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="flex flex-col">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-12">
+        {/* Welcome & Status Banner */}
+        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-slate-100">
               Hello, {studentName}
             </h2>
-            <div className="flex flex-wrap items-center gap-2.5 mt-1.5">
-              <span className="text-sm text-slate-500 dark:text-slate-400 capitalize">
-                Today is <strong className="text-slate-800 dark:text-slate-200">{todaySchedule.dayOfWeek}</strong>, {todaySchedule.dateString} • {timezone}
+            <div className="flex flex-wrap items-center gap-3 mt-2 text-slate-600 dark:text-slate-300 text-sm">
+              <span>
+                Today is <strong className="text-slate-950 dark:text-slate-100 font-semibold">{todaySchedule.dayOfWeek}</strong>, {todaySchedule.dateString}
               </span>
+              <span className="text-slate-400">•</span>
+              <span>{timezone}</span>
               
               {todaySchedule.isHoliday ? (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-900">
-                  <CalendarX className="h-3 w-3" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-coral-50 border border-coral-200 text-coral-700 text-xs font-semibold">
+                  <CalendarX className="h-3.5 w-3.5" />
                   <span>{todaySchedule.holidayTitle || 'Holiday'}</span>
                 </span>
               ) : todaySchedule.isTeachingDay ? (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-900">
-                  <CalendarCheck className="h-3 w-3" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-slate-200/50 border border-slate-400/30 text-slate-700 dark:text-slate-300 text-xs font-semibold">
+                  <CalendarCheck className="h-3.5 w-3.5" />
                   <span>Teaching Day</span>
                 </span>
               ) : (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-medium border border-slate-200 dark:border-slate-700">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-slate-400/30 text-slate-600 text-xs font-medium">
                   <span>Non-Instructional Day</span>
                 </span>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-3">
             <a
               href="/api/schedule/export"
               download="classflow-schedule.ics"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold shadow-xs transition-colors"
-              title="Download RFC 5545 iCalendar (.ics) for Google/Apple/Outlook Calendar"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"
+              title="Download RFC 5545 iCalendar (.ics)"
             >
-              <Download className="h-3.5 w-3.5" />
+              <Download className="h-4 w-4" />
               <span>Export .ICS</span>
             </a>
             <Link
               href="/calendar"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"
             >
-              <CalendarDays className="h-3.5 w-3.5" />
+              <CalendarDays className="h-4 w-4" />
               <span>Academic Calendar</span>
             </Link>
             <Link
-              href="/timetable"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-colors"
+              href="/documents"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded bg-coral-400 hover:bg-coral-500 text-white text-sm font-medium shadow-sm transition-colors"
             >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Manage Timetable</span>
+              <Plus className="h-4 w-4" />
+              <span>Make Schedule</span>
             </Link>
           </div>
         </div>
 
         {/* Holiday Banner if today is an official holiday */}
         {todaySchedule.isHoliday && (
-          <div className="mb-6 p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 flex items-start justify-between gap-4 shadow-sm">
-            <div className="flex items-start gap-3.5">
-              <div className="p-2.5 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-300">
-                <CalendarX className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-200/60 dark:bg-rose-900/80 text-rose-800 dark:text-rose-200 text-[10px] font-bold uppercase tracking-wider mb-1">
-                  Official Academic Holiday
-                </div>
-                <h3 className="text-lg font-bold text-rose-900 dark:text-rose-100">
-                  {todaySchedule.holidayTitle || 'Holiday'}
-                </h3>
-                <p className="text-xs text-rose-700 dark:text-rose-300 mt-1">
-                  {todaySchedule.scheduleNote || 'Regular recurring timetable classes are suspended for today.'}
-                </p>
-              </div>
+          <div className="mb-8 p-6 rounded-lg bg-coral-50 border border-coral-200 flex items-start gap-4 shadow-sm">
+            <div className="p-3 rounded bg-coral-100 text-coral-600">
+              <CalendarX className="h-6 w-6" />
             </div>
-            <Link
-              href="/calendar"
-              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-rose-300 dark:border-rose-800 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors shrink-0"
-            >
-              View Calendar
-            </Link>
+            <div className="flex-1">
+              <h3 className="text-lg font-bold text-coral-900 mb-1">
+                {todaySchedule.holidayTitle || 'Holiday'}
+              </h3>
+              <p className="text-sm text-coral-700">
+                {todaySchedule.scheduleNote || 'Regular recurring timetable classes are suspended for today.'}
+              </p>
+            </div>
           </div>
         )}
 
-        {/* Real Schedule Status Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {/* Focus Cards: Current & Next */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Card 1: Current Class */}
-          <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm relative overflow-hidden">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <div className="p-6 rounded-xl border border-slate-400/30 bg-slate-200 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-bold tracking-widest text-slate-600 uppercase">
                 Current Class
               </span>
               {todaySchedule.currentClass ? (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
-                  <Radio className="h-3 w-3 animate-pulse text-emerald-500" />
+                <span className="inline-flex items-center gap-1.5 text-coral-500 text-sm font-bold">
+                  <Radio className="h-4 w-4 animate-pulse" />
                   In Session
                 </span>
               ) : (
-                <span className="text-xs text-slate-400 font-medium">Off Session</span>
+                <span className="text-xs text-coral-500 font-medium">Off Session</span>
               )}
             </div>
 
             {todaySchedule.currentClass ? (
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-950 tracking-tight mb-2">
                   {todaySchedule.currentClass.subject_name}
                 </h3>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
-                  <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
-                    <Clock className="h-3.5 w-3.5" />
+                <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-sm font-medium text-slate-700 dark:text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 text-coral-600">
+                    <Clock className="h-4 w-4" />
                     {todaySchedule.currentClass.start_time.slice(0, 5)} - {todaySchedule.currentClass.end_time.slice(0, 5)}
                   </span>
                   {todaySchedule.currentClass.room && (
-                    <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">
-                      Room: {todaySchedule.currentClass.room}
-                    </span>
+                    <span className="text-slate-800">Room: {todaySchedule.currentClass.room}</span>
                   )}
                   {todaySchedule.currentClass.faculty_name && (
                     <span>Prof: {todaySchedule.currentClass.faculty_name}</span>
                   )}
-                  {todaySchedule.currentClass.isOverride && (
-                    <span className="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 font-semibold text-[10px]">
-                      Override
-                    </span>
-                  )}
                 </div>
               </div>
             ) : (
-              <div className="py-3">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              <div>
+                <p className="text-lg font-semibold text-slate-700 dark:text-slate-300">
                   {todaySchedule.isHoliday
                     ? 'No classes scheduled during holiday.'
                     : 'No class currently in session.'}
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                  {todaySchedule.isHoliday
-                    ? 'Enjoy your academic holiday or review course material.'
-                    : 'Enjoy your break or review upcoming lecture material.'}
+                <p className="text-sm text-slate-500 mt-1">
+                  Enjoy your break or review upcoming lecture material.
                 </p>
               </div>
             )}
           </div>
 
           {/* Card 2: Next Class */}
-          <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm relative overflow-hidden">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Next Upcoming Class
+          <div className="p-6 rounded-xl border border-slate-400/20 bg-slate-100 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
+                Next Up
               </span>
               {todaySchedule.nextClass && (
-                <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 text-xs font-semibold capitalize">
+                <span className="text-xs font-semibold text-coral-500">
                   {todaySchedule.nextClass.isToday ? 'Later Today' : `Next ${todaySchedule.nextClass.targetDay}`}
                 </span>
               )}
             </div>
 
             {todaySchedule.nextClass ? (
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-950 tracking-tight mb-2">
                   {todaySchedule.nextClass.subject_name}
                 </h3>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 dark:text-slate-300">
-                  <span className="inline-flex items-center gap-1 font-semibold text-indigo-600 dark:text-indigo-400">
-                    <Clock className="h-3.5 w-3.5" />
+                <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-sm font-medium text-slate-600">
+                  <span className="inline-flex items-center gap-1.5 text-slate-800">
+                    <Clock className="h-4 w-4" />
                     {todaySchedule.nextClass.start_time.slice(0, 5)} - {todaySchedule.nextClass.end_time.slice(0, 5)}
                   </span>
                   {todaySchedule.nextClass.room && (
-                    <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800">
-                      Room: {todaySchedule.nextClass.room}
-                    </span>
+                    <span>Room: {todaySchedule.nextClass.room}</span>
                   )}
                   {todaySchedule.nextClass.faculty_name && (
                     <span>Prof: {todaySchedule.nextClass.faculty_name}</span>
@@ -220,11 +191,11 @@ export default async function DashboardPage() {
                 </div>
               </div>
             ) : (
-              <div className="py-3">
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              <div>
+                <p className="text-lg font-semibold text-slate-600">
                   No further classes scheduled.
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                <p className="text-sm text-slate-500 mt-1">
                   All weekly classes complete or no timetable entries configured.
                 </p>
               </div>
@@ -232,74 +203,44 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Today's Chronological Schedule Timeline */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white capitalize">
-              Today&apos;s Class Timeline ({todaySchedule.todayClasses.length} {todaySchedule.todayClasses.length === 1 ? 'class' : 'classes'})
+        {/* Schedule List */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-6 border-b border-slate-400/20 pb-4">
+            <h3 className="text-xl font-bold text-slate-950 dark:text-slate-100 tracking-tight">
+              Today&apos;s Schedule
             </h3>
             <Link
-              href="/timetable"
-              className="text-xs font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 inline-flex items-center gap-1"
+              href="/schedule"
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-slate-100 inline-flex items-center gap-1.5 transition-colors"
             >
-              <span>View full week</span>
-              <ArrowRight className="h-3 w-3" />
+              <span>Full Schedule</span>
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
           {!todaySchedule.hasTimetable ? (
-            /* Calendar-only or new user: No timetable configured */
-            <div className="p-8 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 text-center">
-              <Calendar className="h-8 w-8 text-slate-400 mx-auto mb-2" />
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">
-                No Active Timetable Configured
+            <div className="py-12 text-center">
+              <Calendar className="h-10 w-10 text-slate-400 mx-auto mb-4" />
+              <h4 className="text-lg font-semibold text-slate-700 dark:text-slate-300 dark:text-slate-200 mb-2">
+                No Active Schedule Configured
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-4">
-                You haven&apos;t created or activated a timetable yet. Create your schedule to calculate daily classes alongside your academic calendar.
+              <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto mb-6">
+                You haven&apos;t created or activated a schedule yet. Generate your schedule to calculate daily classes.
               </p>
               <Link
-                href="/timetable"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-colors"
+                href="/documents"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-coral-400 hover:bg-coral-500 text-white text-sm font-medium transition-colors shadow-sm"
               >
-                <Plus className="h-3.5 w-3.5" />
-                <span>Create Timetable</span>
+                <Plus className="h-4 w-4" />
+                <span>Make Schedule</span>
               </Link>
             </div>
-          ) : todaySchedule.isHoliday && todaySchedule.todayClasses.length === 0 ? (
-            /* Holiday empty state */
-            <div className="p-8 rounded-2xl border border-rose-200 dark:border-rose-900/50 bg-rose-50/30 dark:bg-rose-950/20 text-center shadow-xs">
-              <CalendarX className="h-8 w-8 text-rose-500 mx-auto mb-2" />
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">
-                Classes Suspended: {todaySchedule.holidayTitle || 'Holiday'}
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                No classes take place on this official institutional holiday.
-                {todaySchedule.nextClass && (
-                  <span className="block mt-2 font-medium text-slate-700 dark:text-slate-300 capitalize">
-                    Your next class is {todaySchedule.nextClass.subject_name} on {todaySchedule.nextClass.targetDay} at {todaySchedule.nextClass.start_time.slice(0, 5)}.
-                  </span>
-                )}
-              </p>
-            </div>
           ) : todaySchedule.todayClasses.length === 0 ? (
-            /* Active timetable exists, but zero classes on this specific weekday */
-            <div className="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center shadow-sm">
-              <CalendarCheck className="h-8 w-8 text-emerald-500 mx-auto mb-2" />
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">
-                No Classes Scheduled for Today
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                Your timetable &ldquo;{todaySchedule.timetableName}&rdquo; has no lectures or labs on {todaySchedule.dayOfWeek}.
-                {todaySchedule.nextClass && (
-                  <span className="block mt-2 font-medium text-slate-700 dark:text-slate-300 capitalize">
-                    Your next class is {todaySchedule.nextClass.subject_name} on {todaySchedule.nextClass.targetDay} at {todaySchedule.nextClass.start_time.slice(0, 5)}.
-                  </span>
-                )}
-              </p>
+            <div className="py-12 text-center text-slate-500">
+              <p className="text-lg font-medium">No classes scheduled for today.</p>
             </div>
           ) : (
-            /* Chronological Class Slots */
-            <div className="space-y-3">
+            <div className="space-y-1">
               {todaySchedule.todayClasses.map((item) => {
                 const isCurrent = item.status === 'current';
                 const isCompleted = item.status === 'completed';
@@ -307,75 +248,31 @@ export default async function DashboardPage() {
                 return (
                   <div
                     key={item.id}
-                    className={`p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                      isCurrent
-                        ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/30 shadow-sm'
-                        : isCompleted
-                        ? 'border-slate-200 dark:border-slate-800/60 bg-slate-100/50 dark:bg-slate-900/40 opacity-75'
-                        : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm'
+                    className={`py-4 px-2 border-b border-slate-400/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${
+                      isCurrent ? 'bg-slate-200/50 rounded-lg border-transparent px-4 -mx-2' : ''
                     }`}
                   >
-                    <div className="flex items-start gap-3.5">
-                      <div
-                        className={`p-2.5 rounded-lg shrink-0 ${
-                          isCurrent
-                            ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300'
-                            : isCompleted
-                            ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                            : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400'
-                        }`}
-                      >
-                        <Clock className="h-5 w-5" />
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 min-w-0">
+                      <div className={`text-sm font-semibold tabular-nums ${isCompleted ? 'text-slate-400' : 'text-slate-700 dark:text-slate-300'}`}>
+                        {item.start_time.slice(0, 5)} - {item.end_time.slice(0, 5)}
                       </div>
-
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`font-bold text-sm ${
-                              isCompleted
-                                ? 'text-slate-500 dark:text-slate-400 line-through'
-                                : 'text-slate-900 dark:text-white'
-                            }`}
-                          >
-                            {item.subject_name}
-                          </span>
-                          {item.subject_code && (
-                            <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                              {item.subject_code}
-                            </span>
-                          )}
-                          {item.isOverride && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300">
-                              Override
-                            </span>
-                          )}
+                      <div className="min-w-0">
+                        <div className={`text-base font-bold truncate ${isCompleted ? 'text-slate-500' : 'text-slate-950 dark:text-slate-100'} ${isCurrent ? 'text-coral-500' : ''}`}>
+                          {item.subject_name}
                         </div>
-
-                        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-1">
-                          <span className="font-semibold text-slate-700 dark:text-slate-300">
-                            {item.start_time.slice(0, 5)} - {item.end_time.slice(0, 5)}
-                          </span>
-                          {item.room && <span>Room: {item.room}</span>}
-                          {item.faculty_name && <span>• {item.faculty_name}</span>}
-                          {item.notes && <span className="italic text-slate-400">({item.notes})</span>}
+                        <div className="flex flex-wrap items-center gap-x-4 text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+                          {item.room && <span>Room {item.room}</span>}
+                          {item.faculty_name && <span>{item.faculty_name}</span>}
+                          {item.class_type && <span className="uppercase tracking-wider">{item.class_type}</span>}
                         </div>
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-2 self-start sm:self-center">
-                      <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                        {item.class_type}
-                      </span>
-                      {isCurrent && (
-                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white animate-pulse">
-                          Active
-                        </span>
-                      )}
-                      {isCompleted && (
-                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                          Done
-                        </span>
-                      )}
+                    <div className="shrink-0 flex items-center">
+                      {isCompleted ? (
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Done</span>
+                      ) : isCurrent ? (
+                        <span className="text-xs font-bold text-coral-500 uppercase tracking-widest">Now</span>
+                      ) : null}
                     </div>
                   </div>
                 );
@@ -384,70 +281,40 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {/* Upcoming Holidays & Events Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-          {/* Upcoming Holidays */}
-          <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Upcoming Holidays
-              </h4>
-              <Link href="/calendar" className="text-xs font-semibold text-purple-600 hover:text-purple-700">
-                All events
-              </Link>
-            </div>
+        {/* Academic Calendar Events */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+            <h4 className="text-sm font-bold text-coral-500 mb-4 tracking-tight uppercase">Upcoming Holidays</h4>
             {todaySchedule.upcomingHolidays.length === 0 ? (
-              <p className="text-xs text-slate-400 py-2">No upcoming holidays registered in calendar.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">No upcoming holidays.</p>
             ) : (
-              <div className="space-y-2">
-                {todaySchedule.upcomingHolidays.map((h) => (
-                  <div
-                    key={h.id}
-                    className="p-2.5 rounded-xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/60 flex items-center justify-between text-xs"
-                  >
-                    <span className="font-semibold text-rose-800 dark:text-rose-200">{h.title}</span>
-                    <span className="font-mono text-[11px] text-rose-600 dark:text-rose-400">{h.event_date}</span>
-                  </div>
+              <ul className="space-y-3 text-sm">
+                {todaySchedule.upcomingHolidays.map(h => (
+                  <li key={h.id} className="flex justify-between items-center border-b border-coral-200/50 dark:border-coral-900/50 pb-2 last:border-0 last:pb-0">
+                    <span className="font-semibold text-coral-900 dark:text-coral-100">{h.title}</span>
+                    <span className="text-coral-700 dark:text-coral-300 text-xs font-medium">{h.event_date}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </div>
-
-          {/* Upcoming Academic Events */}
-          <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Upcoming Academic Events
-              </h4>
-              <Link href="/calendar" className="text-xs font-semibold text-purple-600 hover:text-purple-700">
-                Calendar
-              </Link>
-            </div>
+          <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+            <h4 className="text-sm font-bold text-coral-400 mb-4 tracking-tight uppercase">Academic Events</h4>
             {todaySchedule.upcomingEvents.length === 0 ? (
-              <p className="text-xs text-slate-400 py-2">No academic events registered.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">No academic events registered.</p>
             ) : (
-              <div className="space-y-2">
-                {todaySchedule.upcomingEvents.map((ev) => (
-                  <div
-                    key={ev.id}
-                    className="p-2.5 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/60 flex items-center justify-between text-xs"
-                  >
-                    <span className="font-semibold text-purple-800 dark:text-purple-200">{ev.title}</span>
-                    <span className="font-mono text-[11px] text-purple-600 dark:text-purple-400">{ev.event_date}</span>
-                  </div>
+              <ul className="space-y-3 text-sm">
+                {todaySchedule.upcomingEvents.map(ev => (
+                  <li key={ev.id} className="flex justify-between items-center border-b border-slate-400/20 pb-2 last:border-0 last:pb-0">
+                    <span className="font-semibold text-slate-800 dark:text-slate-100">{ev.title}</span>
+                    <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">{ev.event_date}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </div>
         </div>
-
-
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 dark:border-slate-800 py-4 px-6 text-center text-xs text-slate-500 dark:text-slate-400">
-        ClassFlow • Next.js 15 App Router • Supabase PostgreSQL • Real Deterministic Schedule Engine
-      </footer>
     </div>
   );
 }

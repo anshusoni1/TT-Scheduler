@@ -15,7 +15,7 @@ export default function RegisterPage() {
     <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold shadow-md shadow-indigo-200 dark:shadow-none">
+          <div className="h-10 w-10 rounded-xl bg-slate-950 flex items-center justify-center text-white font-bold shadow-md shadow-coral-200 dark:shadow-none">
             <BookOpen className="h-5 w-5" />
           </div>
           <div>
@@ -48,7 +48,7 @@ export default function RegisterPage() {
               required
               autoComplete="name"
               placeholder="e.g. Alex Morgan"
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors"
             />
           </div>
 
@@ -61,7 +61,7 @@ export default function RegisterPage() {
               name="college"
               type="text"
               placeholder="e.g. National Institute of Technology"
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors"
             />
           </div>
 
@@ -76,7 +76,7 @@ export default function RegisterPage() {
               required
               autoComplete="email"
               placeholder="student@university.edu"
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors"
             />
           </div>
 
@@ -91,14 +91,14 @@ export default function RegisterPage() {
               required
               autoComplete="new-password"
               placeholder="•••••••• (minimum 6 characters)"
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-coral-500 transition-colors"
             />
           </div>
 
           <button
             type="submit"
             disabled={isPending}
-            className="w-full mt-2 py-2.5 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="w-full mt-2 py-2.5 px-4 rounded-lg bg-coral-600 hover:bg-coral-700 active:bg-coral-800 text-white font-medium text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isPending ? 'Creating account...' : 'Create Account'}
             {!isPending && <ArrowRight className="h-4 w-4" />}
@@ -107,7 +107,7 @@ export default function RegisterPage() {
 
         <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
           Already have an account?{' '}
-          <Link href="/auth/login" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">
+          <Link href="/auth/login" className="font-semibold text-coral-600 hover:text-coral-500 dark:text-coral-400">
             Sign In
           </Link>
         </div>

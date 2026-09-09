@@ -18,10 +18,11 @@ interface TokenBucket {
   resetAt: number;
 }
 
-// In-memory store. Note: In serverless environments, this state is per-lambda instance.
-// For true global rate limiting, a persistent store like Redis (Vercel KV) is required.
+// In-memory store. 
+// SECURITY NOTE: In serverless environments (like Vercel), this state is per-lambda instance 
+// and resets frequently. For true global rate limiting, a persistent store like Redis (Vercel KV) 
+// MUST be provisioned. This is currently tracked as an accepted residual risk for Phase 1.
 const store = new Map<string, TokenBucket>();
-
 export class RateLimiter {
   /**
    * Applies rate limiting based on a client identifier.

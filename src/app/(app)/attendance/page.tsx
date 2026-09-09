@@ -123,16 +123,16 @@ export default function AttendancePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
+    <div className="flex flex-col">
       {/* Main Content */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
         {/* Page Header */}
         <div className="flex flex-col justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight">
+            <h1 className="text-2xl font-semibold text-slate-800 dark:text-slate-100 tracking-tight">
               Attendance Intelligence
             </h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-sm text-slate-500 dark:text-slate-300 mt-1">
               Real Occurrence-Linked Attendance & Safe Cuts Tracking
             </p>
           </div>
@@ -157,98 +157,98 @@ export default function AttendancePage() {
         {overview && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Big Overall Percentage Card */}
-            <div className="md:col-span-2 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div className="md:col-span-2 p-6 bg-slate-50 border border-slate-400/20 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <span className="text-xs font-medium uppercase tracking-widest text-slate-500">
                     Overall Attendance
                   </span>
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 text-xs font-medium border ${
                       overview.status === 'safe'
-                        ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900'
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                         : overview.status === 'warning'
-                        ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900'
-                        : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-900'
+                        ? 'bg-amber-50 text-amber-700 border-amber-200'
+                        : 'bg-coral-50 text-coral-700 border-coral-200'
                     }`}
                   >
-                    <ShieldCheck className="h-3 w-3" />
+                    <ShieldCheck className="h-3.5 w-3.5" />
                     <span>{overview.status.toUpperCase()}</span>
                   </span>
                 </div>
 
                 <div className="flex items-baseline gap-3">
-                  <span className="text-4xl font-extrabold text-slate-900 dark:text-white">
+                  <span className="text-5xl font-light text-slate-800 tracking-tight">
                     {overview.overall_percentage}%
                   </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">
+                  <span className="text-xs text-slate-400">
                     Target: {overview.target_percentage}%
                   </span>
                 </div>
 
                 {/* Progress bar */}
-                <div className="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full mt-3 overflow-hidden">
+                <div className="w-full h-1.5 bg-slate-200 mt-4 overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-500 rounded-full ${
+                    className={`h-full transition-all duration-500 ${
                       overview.overall_percentage >= overview.target_percentage
-                        ? 'bg-emerald-500'
+                        ? 'bg-emerald-400'
                         : overview.overall_percentage >= overview.target_percentage - 10
-                        ? 'bg-amber-500'
-                        : 'bg-rose-500'
+                        ? 'bg-amber-400'
+                        : 'bg-coral-400'
                     }`}
                     style={{ width: `${Math.min(100, overview.overall_percentage)}%` }}
                   />
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-                Formula: <span className="font-mono font-medium">present / (present + absent)</span> • Excused sessions are excluded from denominator.
+              <div className="mt-5 pt-4 border-t border-slate-400/20 text-xs text-slate-500">
+                Formula: <span className="font-mono text-slate-600">present / (present + absent)</span> • Excused sessions are excluded from denominator.
               </div>
             </div>
 
             {/* Counts breakdown card */}
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            <div className="p-6 bg-slate-50 border border-slate-400/20 flex flex-col justify-between">
+              <span className="text-xs font-medium uppercase tracking-widest text-slate-500">
                 Logged Sessions
               </span>
-              <div className="grid grid-cols-2 gap-3 my-2">
-                <div className="p-2.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
-                  <div className="text-[10px] text-emerald-700 dark:text-emerald-300 font-semibold uppercase">Present</div>
-                  <div className="text-2xl font-black text-emerald-800 dark:text-emerald-200 mt-0.5">{overview.present_count}</div>
+              <div className="grid grid-cols-2 gap-px my-4 bg-slate-400/20 border border-slate-400/20">
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Present</div>
+                  <div className="text-2xl font-light text-slate-800 mt-1">{overview.present_count}</div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-900/50">
-                  <div className="text-[10px] text-rose-700 dark:text-rose-300 font-semibold uppercase">Absent</div>
-                  <div className="text-2xl font-black text-rose-800 dark:text-rose-200 mt-0.5">{overview.absent_count}</div>
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Absent</div>
+                  <div className="text-2xl font-light text-slate-800 mt-1">{overview.absent_count}</div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-sky-50/60 dark:bg-sky-950/30 border border-sky-100 dark:border-sky-900/50">
-                  <div className="text-[10px] text-sky-700 dark:text-sky-300 font-semibold uppercase">Excused</div>
-                  <div className="text-2xl font-black text-sky-800 dark:text-sky-200 mt-0.5">{overview.excused_count}</div>
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Excused</div>
+                  <div className="text-2xl font-light text-slate-800 mt-1">{overview.excused_count}</div>
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800">
-                  <div className="text-[10px] text-slate-500 font-semibold uppercase">Not Marked</div>
-                  <div className="text-2xl font-black text-slate-700 dark:text-slate-300 mt-0.5">{overview.not_marked_count}</div>
+                <div className="p-3 bg-slate-100">
+                  <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Unmarked</div>
+                  <div className="text-2xl font-light text-slate-500 mt-1">{overview.not_marked_count}</div>
                 </div>
               </div>
-              <div className="text-[11px] text-slate-400">
+              <div className="text-[11px] text-slate-500">
                 Total Semester Scheduled: {overview.total_scheduled}
               </div>
             </div>
 
             {/* Quick Action Info Card */}
-            <div className="p-6 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/60 shadow-sm flex flex-col justify-between">
+            <div className="p-6 bg-slate-200/50 border border-slate-400/20 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                <span className="text-xs font-medium uppercase tracking-widest text-slate-600 flex items-center gap-1.5">
                   <TrendingUp className="h-3.5 w-3.5" />
                   <span>Academic Margin</span>
                 </span>
-                <p className="text-xs text-indigo-950 dark:text-indigo-200 mt-2 leading-relaxed">
+                <p className="text-xs text-slate-700 mt-3 leading-relaxed">
                   Attendance is linked to real schedule occurrences. Marking a class updates safe-cut margins in real-time.
                 </p>
               </div>
-              <div className="pt-3 border-t border-indigo-200/60 dark:border-indigo-900/60">
+              <div className="pt-4 border-t border-slate-400/20 mt-4">
                 <Link
                   href="/schedule"
-                  className="text-xs font-bold text-indigo-700 dark:text-indigo-300 hover:underline"
+                  className="text-xs font-medium text-coral-600 hover:text-coral-500 hover:underline transition-colors"
                 >
                   View Full Week Schedule →
                 </Link>
@@ -258,14 +258,14 @@ export default function AttendancePage() {
         )}
 
         {/* Interactive Class Occurrence Marking Station */}
-        <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-3">
+        <div className="p-6 bg-slate-50 border border-slate-400/20 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-400/20 gap-3">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <CalendarIcon className="h-4 w-4 text-indigo-600" />
+              <h2 className="text-lg font-semibold text-slate-800 flex items-center gap-2">
+                <CalendarIcon className="h-4 w-4 text-coral-500" />
                 <span>Mark Attendance by Scheduled Occurrence</span>
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-500 mt-1">
                 Select any academic date to log your actual class attendance.
               </p>
             </div>
@@ -273,27 +273,27 @@ export default function AttendancePage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setSelectedDate(addDaysToDate(selectedDate, -1))}
-                className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
+                className="p-1.5 border border-slate-400/30 hover:bg-slate-200 text-slate-600 transition-colors"
                 title="Previous Day"
               >
-                <ChevronLeft className="h-3.5 w-3.5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
               <input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="px-2.5 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                className="px-3 py-1.5 text-xs border border-slate-400/30 bg-transparent text-slate-800 focus:outline-none focus:border-slate-800"
               />
               <button
                 onClick={() => setSelectedDate(addDaysToDate(selectedDate, 1))}
-                className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300"
+                className="p-1.5 border border-slate-400/30 hover:bg-slate-200 text-slate-600 transition-colors"
                 title="Next Day"
               >
-                <ChevronRight className="h-3.5 w-3.5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setSelectedDate(todayStr)}
-                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300"
+                className="px-3 py-1.5 text-xs font-medium border border-slate-400/30 bg-slate-200/50 hover:bg-slate-200 text-slate-700 transition-colors"
               >
                 Today
               </button>
@@ -302,27 +302,27 @@ export default function AttendancePage() {
 
           {/* Date's Class List */}
           {loading ? (
-            <div className="py-12 text-center text-slate-400">
-              <Loader2 className="h-6 w-6 animate-spin mx-auto mb-2 text-indigo-600" />
+            <div className="py-12 text-center text-slate-500">
+              <Loader2 className="h-6 w-6 animate-spin mx-auto mb-3 text-coral-500" />
               <span className="text-xs">Resolving scheduled occurrences...</span>
             </div>
           ) : daySchedule?.isHoliday ? (
-            <div className="p-8 rounded-xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 text-center">
-              <AlertTriangle className="h-8 w-8 text-rose-500 mx-auto mb-2" />
-              <h3 className="text-sm font-bold text-rose-900 dark:text-rose-200">
+            <div className="p-8 border border-coral-200 bg-coral-50/30 text-center">
+              <AlertTriangle className="h-8 w-8 text-coral-500 mx-auto mb-3" />
+              <h3 className="text-sm font-semibold text-coral-800">
                 Official Institutional Holiday: {daySchedule.holidayTitle}
               </h3>
-              <p className="text-xs text-rose-700 dark:text-rose-400 mt-1 max-w-md mx-auto">
+              <p className="text-xs text-coral-700 mt-2 max-w-md mx-auto leading-relaxed">
                 Regular timetable lectures and labs are suspended on official calendar holidays. Attendance cannot be recorded for this date.
               </p>
             </div>
           ) : !daySchedule || daySchedule.classes.length === 0 ? (
-            <div className="py-8 text-center text-slate-400">
-              <CalendarIcon className="h-6 w-6 mx-auto mb-2 opacity-50" />
+            <div className="py-12 border border-dashed border-slate-400/30 text-center text-slate-400">
+              <CalendarIcon className="h-6 w-6 mx-auto mb-3 opacity-50 text-slate-400" />
               <p className="text-xs">No timetable classes scheduled for {selectedDate}.</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {daySchedule.classes.map((cls) => {
                 const currentStatus = getSlotStatus(cls.id);
                 const isPending = markingLoading === cls.id;
@@ -330,25 +330,25 @@ export default function AttendancePage() {
                 return (
                   <div
                     key={cls.id}
-                    className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="p-5 border border-slate-400/20 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-5"
                   >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-slate-900 dark:text-white">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-semibold text-sm text-slate-800">
                           {cls.subject_name}
                         </span>
                         {cls.subject_code && (
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 border border-slate-400/30 text-slate-500">
                             {cls.subject_code}
                           </span>
                         )}
-                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
+                        <span className="text-[10px] font-medium uppercase px-2 py-0.5 border border-slate-400/30 bg-slate-50 text-slate-600">
                           {cls.class_type}
                         </span>
                       </div>
 
                       <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-                        <span className="font-mono flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-semibold">
+                        <span className="flex items-center gap-1.5 text-slate-700 font-medium">
                           <Clock className="h-3.5 w-3.5" />
                           {cls.start_time.slice(0, 5)} - {cls.end_time.slice(0, 5)}
                         </span>
@@ -358,14 +358,14 @@ export default function AttendancePage() {
                     </div>
 
                     {/* Action Buttons: Present, Absent, Excused, Reset */}
-                    <div className="flex items-center gap-1.5 self-start sm:self-center">
+                    <div className="flex items-center gap-2 self-start sm:self-center">
                       <button
                         onClick={() => handleMarkAttendance(cls, 'present')}
                         disabled={isPending}
-                        className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                        className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-colors border ${
                           currentStatus === 'present'
-                            ? 'bg-emerald-600 text-white shadow-xs'
-                            : 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 border border-emerald-200 dark:border-emerald-900'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                            : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400 hover:bg-slate-50'
                         }`}
                       >
                         <CheckCircle2 className="h-3.5 w-3.5" />
@@ -375,10 +375,10 @@ export default function AttendancePage() {
                       <button
                         onClick={() => handleMarkAttendance(cls, 'absent')}
                         disabled={isPending}
-                        className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                        className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-colors border ${
                           currentStatus === 'absent'
-                            ? 'bg-rose-600 text-white shadow-xs'
-                            : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/80 border border-rose-200 dark:border-rose-900'
+                            ? 'bg-coral-50 text-coral-700 border-coral-300'
+                            : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400 hover:bg-slate-50'
                         }`}
                       >
                         <XCircle className="h-3.5 w-3.5" />
@@ -388,10 +388,10 @@ export default function AttendancePage() {
                       <button
                         onClick={() => handleMarkAttendance(cls, 'excused')}
                         disabled={isPending}
-                        className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                        className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-colors border ${
                           currentStatus === 'excused'
-                            ? 'bg-sky-600 text-white shadow-xs'
-                            : 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900/80 border border-sky-200 dark:border-sky-900'
+                            ? 'bg-amber-50 text-amber-700 border-amber-300'
+                            : 'bg-white text-slate-600 border-slate-300 hover:border-slate-400 hover:bg-slate-50'
                         }`}
                       >
                         <HelpCircle className="h-3.5 w-3.5" />
@@ -402,10 +402,10 @@ export default function AttendancePage() {
                         <button
                           onClick={() => handleMarkAttendance(cls, 'not_marked')}
                           disabled={isPending}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                          className="p-2 text-slate-400 hover:text-slate-700 transition-colors"
                           title="Reset status to Unmarked"
                         >
-                          <RotateCcw className="h-3.5 w-3.5" />
+                          <RotateCcw className="h-4 w-4" />
                         </button>
                       )}
                     </div>
@@ -418,9 +418,9 @@ export default function AttendancePage() {
 
         {/* Per-Subject Breakdown Cards */}
         {overview && overview.subjects.length > 0 && (
-          <div className="space-y-4">
-            <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-indigo-600" />
+          <div className="space-y-6">
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 flex items-center gap-2 border-b border-slate-400/20 dark:border-slate-800 pb-3">
+              <BarChart3 className="h-5 w-5 text-coral-500" />
               <span>Subject Attendance Breakdowns & Safe Cuts</span>
             </h3>
 
@@ -429,27 +429,27 @@ export default function AttendancePage() {
                 return (
                   <div
                     key={sub.subject_name}
-                    className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3"
+                    className="p-6 bg-white border border-slate-200 shadow-sm space-y-4"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
+                        <h4 className="font-semibold text-sm text-slate-900">
                           {sub.subject_name}
                         </h4>
                         {sub.subject_code && (
-                          <span className="font-mono text-xs text-slate-400">
+                          <span className="font-mono text-xs text-slate-500 mt-1 block">
                             {sub.subject_code}
                           </span>
                         )}
                       </div>
 
                       <span
-                        className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full ${
+                        className={`text-xs font-bold px-2 py-0.5 rounded-sm ${
                           sub.status === 'safe'
-                            ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200'
+                            ? 'bg-emerald-100 text-emerald-800'
                             : sub.status === 'warning'
-                            ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200'
-                            : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200'
+                            ? 'bg-amber-100 text-amber-900'
+                            : 'bg-rose-100 text-rose-800'
                         }`}
                       >
                         {sub.current_percentage}%
@@ -457,9 +457,9 @@ export default function AttendancePage() {
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all ${
+                        className={`h-full transition-all rounded-full ${
                           sub.current_percentage >= overview.target_percentage
                             ? 'bg-emerald-500'
                             : sub.current_percentage >= overview.target_percentage - 10
@@ -470,36 +470,36 @@ export default function AttendancePage() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 text-center text-xs pt-1">
-                      <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60">
-                        <div className="text-[10px] text-slate-400 uppercase">Present</div>
-                        <div className="font-bold text-slate-900 dark:text-white">{sub.present}</div>
+                    <div className="grid grid-cols-3 gap-2 text-center mt-3">
+                      <div className="py-2 px-1 bg-slate-50 border border-slate-100">
+                        <div className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Present</div>
+                        <div className="font-semibold text-slate-800 text-lg">{sub.present}</div>
                       </div>
-                      <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60">
-                        <div className="text-[10px] text-slate-400 uppercase">Absent</div>
-                        <div className="font-bold text-slate-900 dark:text-white">{sub.absent}</div>
+                      <div className="py-2 px-1 bg-slate-50 border border-slate-100">
+                        <div className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Absent</div>
+                        <div className="font-semibold text-slate-800 text-lg">{sub.absent}</div>
                       </div>
-                      <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60">
-                        <div className="text-[10px] text-slate-400 uppercase">Unmarked</div>
-                        <div className="font-bold text-slate-900 dark:text-white">{sub.not_marked}</div>
+                      <div className="py-2 px-1 bg-slate-50 border border-slate-100">
+                        <div className="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Unmarked</div>
+                        <div className="font-semibold text-slate-500 text-lg">{sub.not_marked}</div>
                       </div>
                     </div>
 
                     {/* Safe Cuts vs Classes Needed Banner */}
-                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <div className="pt-3 border-t border-slate-100 text-xs">
                       {sub.safe_cuts_remaining > 0 ? (
-                        <div className="text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-1.5">
-                          <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-                          <span>Safe Cuts Remaining: {sub.safe_cuts_remaining} lectures</span>
+                        <div className="text-emerald-700 font-medium flex items-center gap-1.5">
+                          <CheckCircle2 className="h-4 w-4 shrink-0" />
+                          <span>Safe Cuts Remaining: {sub.safe_cuts_remaining}</span>
                         </div>
                       ) : sub.classes_needed_for_target > 0 ? (
-                        <div className="text-rose-600 dark:text-rose-400 font-semibold flex items-center gap-1.5">
-                          <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                          <span>Must attend next {sub.classes_needed_for_target} consecutive sessions</span>
+                        <div className="text-rose-600 font-medium flex items-center gap-1.5">
+                          <AlertTriangle className="h-4 w-4 shrink-0" />
+                          <span>Must attend next {sub.classes_needed_for_target} sessions</span>
                         </div>
                       ) : (
                         <div className="text-slate-500 flex items-center gap-1.5">
-                          <span>On exact target threshold ({overview.target_percentage}%)</span>
+                          <span>Target: {overview.target_percentage}% achieved</span>
                         </div>
                       )}
                     </div>

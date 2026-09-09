@@ -57,9 +57,11 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const fileBuffer = Buffer.from(arrayBuffer);
 
-    // Sanitize filename
-    const safeFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-
+    // Sanitize filename to prevent path traversal and ensure it's not empty
+    let safeFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').replace(/\.+/g, '.').replace(/^\.+/, '');
+    if (!safeFileName) {
+      safeFileName = `upload_${Date.now()}`;
+    }
     // 3. Create document record & upload to Supabase Storage
     const repo = new DocumentsRepository(supabase);
     const documentId = crypto.randomUUID();
