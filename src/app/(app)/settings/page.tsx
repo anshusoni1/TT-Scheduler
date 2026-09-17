@@ -185,7 +185,7 @@ export default function SettingsPage() {
             Settings
           </h2>
           <p className="text-slate-600 dark:text-slate-300 mt-2 text-sm font-medium">
-            Manage your profile, attendance preferences and calendar settings.
+            Account configuration and timetable preferences.
           </p>
         </div>
 

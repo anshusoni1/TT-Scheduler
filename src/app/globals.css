@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #EAE7DC; /* slate-100 */
-  --foreground: #2A2927; /* slate-800 */
+  --background: #F8F3EA; /* NxtBell Background */
+  --foreground: #1F1F1F; /* NxtBell Text */
 }
 
 .dark {
   --background: #141312; /* slate-950 */
-  --foreground: #EAE7DC; /* slate-100 */
+  --foreground: #F8F3EA; /* NxtBell Light Background */
 }
 
 body {

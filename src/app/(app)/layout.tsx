@@ -12,7 +12,7 @@ export default function AppLayout({
         {children}
       </div>
       <footer className="py-8 px-6 text-center text-sm text-slate-500 font-medium tracking-wide">
-        <p className="text-slate-800 dark:text-slate-200 font-semibold mb-1">ClassFlow</p>
+        <p className="text-slate-800 dark:text-slate-200 font-semibold mb-1">NxtBell</p>
         <p>Zergap &middot; Built by Anshu Soni</p>
       </footer>
     </div>

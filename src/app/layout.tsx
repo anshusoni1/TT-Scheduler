@@ -3,8 +3,12 @@ import './globals.css';
 import { AIAssistantFAB } from '@/components/AIAssistantFAB';
 
 export const metadata: Metadata = {
-  title: 'ClassFlow | Academic Schedule & Timetable Intelligence',
-  description: 'Production-grade academic schedule and calendar management platform for college students.',
+  title: 'NxtBell',
+  description: 'Make your college schedule simple. Upload your timetable and academic calendar to organize your classes, holidays and daily schedule.',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/nxtbell-icon.png',
+  }
 };
 
 export default function RootLayout({

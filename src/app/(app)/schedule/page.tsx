@@ -132,7 +132,7 @@ export default function WeeklySchedulePage() {
 
             <a
               href={`/api/schedule/export?from=${startOfWeek}&to=${endOfWeek}`}
-              download={`classflow-schedule-${startOfWeek}-to-${endOfWeek}.ics`}
+              download={`nxtbell-schedule-${startOfWeek}-to-${endOfWeek}.ics`}
               className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 dark:hover:text-slate-100 text-sm font-medium transition-colors"
               title="Download iCalendar for this week"
             >

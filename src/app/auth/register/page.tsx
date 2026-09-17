@@ -14,14 +14,9 @@ export default function RegisterPage() {
   return (
     <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-xl bg-slate-950 flex items-center justify-center text-white font-bold shadow-md shadow-coral-200 dark:shadow-none">
-            <BookOpen className="h-5 w-5" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">ClassFlow</h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Student Account Registration</p>
-          </div>
+        <div className="flex flex-col items-center justify-center mb-6">
+          <img src="/nxtbell-icon.png" alt="NxtBell" className="h-16 w-16 mb-4" />
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">NxtBell</h1>
         </div>
 
         <div className="mb-6">

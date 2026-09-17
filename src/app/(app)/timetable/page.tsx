@@ -250,7 +250,7 @@ export default function TimetablePage() {
 
             <a
               href="/api/schedule/export"
-              download="classflow-schedule.ics"
+              download="nxtbell-schedule.ics"
               className="text-xs font-medium px-4 py-2 rounded-none border border-slate-400/30 text-slate-800 hover:bg-slate-200/50 transition-colors flex items-center gap-1.5"
               title="Download iCalendar format (.ics)"
             >
