@@ -36,7 +36,7 @@ export default function AssistantPage() {
     {
       role: 'assistant',
       content:
-        'Hello! I am your NxtBell Academic Assistant. I can check your today schedule, upcoming classes, academic holidays, teaching days, and real-time attendance figures. What would you like to know?',
+        'Hello! I am your ClassFlow Academic Assistant. I can check your today schedule, upcoming classes, academic holidays, teaching days, and real-time attendance figures. What would you like to know?',
     },
   ]);
   const [input, setInput] = useState('');
@@ -110,7 +110,7 @@ export default function AssistantPage() {
               </div>
               <div>
                 <h1 className="text-base font-bold text-neutral-100 flex items-center gap-2">
-                  <span>NxtBell AI Assistant</span>
+                  <span>ClassFlow AI Assistant</span>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
                     Gemini 3.6 Flash
                   </span>

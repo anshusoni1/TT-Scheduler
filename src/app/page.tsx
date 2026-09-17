@@ -15,9 +15,10 @@ export default async function HomePage() {
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/nxtbell-logo.svg" alt="NxtBell" className="h-8 w-auto dark:hidden" />
-          <img src="/nxtbell-logo-dark.svg" alt="NxtBell" className="h-8 w-auto hidden dark:block" />
-          <span className="sr-only">NxtBell</span>
+          <div className="h-9 w-9 rounded-xl bg-slate-950 flex items-center justify-center text-white font-bold">
+            <BookOpen className="h-5 w-5" />
+          </div>
+          <span className="text-lg font-bold text-slate-950 dark:text-white tracking-tight">ClassFlow</span>
         </div>
         <div className="flex items-center gap-3">
           <Link
@@ -38,11 +39,11 @@ export default async function HomePage() {
       {/* Hero Section */}
       <main className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
-          Make your college schedule simple.
+          Your timetable, organized.
         </h1>
 
         <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed">
-          Upload your timetable and academic calendar to organize your classes, holidays and daily schedule.
+          ClassFlow effortlessly manages your daily academic schedule, tracks your attendance, and automatically handles holidays so you never miss a class.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -91,7 +92,7 @@ export default async function HomePage() {
 
       {/* Footer */}
       <footer className="border-t border-slate-300 dark:border-slate-800 px-6 py-8 text-center text-sm text-slate-500 font-medium tracking-wide">
-        <p className="text-slate-950 dark:text-slate-200 font-semibold mb-1">NxtBell</p>
+        <p className="text-slate-950 dark:text-slate-200 font-semibold mb-1">ClassFlow</p>
         <p>Zergap &middot; Built by Anshu Soni</p>
       </footer>
     </div>

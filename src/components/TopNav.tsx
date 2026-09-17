@@ -28,9 +28,9 @@ export async function TopNav() {
       <div className="flex items-center gap-4">
         <MobileNav />
         <Link href="/dashboard" className="flex items-center gap-2 group">
-          <img src="/nxtbell-logo.svg" alt="NxtBell" className="h-7 w-auto dark:hidden" />
-          <img src="/nxtbell-logo-dark.svg" alt="NxtBell" className="h-7 w-auto hidden dark:block" />
-          <span className="sr-only">NxtBell</span>
+          <h1 className="text-lg font-bold text-slate-950 dark:text-white tracking-tight">
+            ClassFlow
+          </h1>
         </Link>
       </div>
 
@@ -45,7 +45,7 @@ export async function TopNav() {
           </Link>
           <Link
             href="/documents"
-            className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-lg bg-coral-500 text-white hover:bg-coral-600 transition-colors shadow-sm"
+            className="flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded bg-coral-400 text-white hover:bg-coral-500 transition-colors shadow-sm"
           >
             <FilePlus className="w-4 h-4" />
             Make Schedule

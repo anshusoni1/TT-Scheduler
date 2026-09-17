@@ -45,7 +45,7 @@ export default async function DashboardPage() {
               <span>{timezone}</span>
               
               {todaySchedule.isHoliday ? (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-slate-100 border border-slate-300 text-slate-800 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-200 text-xs font-semibold">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-coral-50 border border-coral-200 text-coral-700 text-xs font-semibold">
                   <CalendarX className="h-3.5 w-3.5" />
                   <span>{todaySchedule.holidayTitle || 'Holiday'}</span>
                 </span>
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="/api/schedule/export"
-              download="nxtbell-schedule.ics"
+              download="classflow-schedule.ics"
               className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"
               title="Download RFC 5545 iCalendar (.ics)"
             >
@@ -91,15 +91,15 @@ export default async function DashboardPage() {
 
         {/* Holiday Banner if today is an official holiday */}
         {todaySchedule.isHoliday && (
-          <div className="mb-8 p-6 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4 shadow-sm">
-            <div className="p-3 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          <div className="mb-8 p-6 rounded-lg bg-coral-50 border border-coral-200 flex items-start gap-4 shadow-sm">
+            <div className="p-3 rounded bg-coral-100 text-coral-600">
               <CalendarX className="h-6 w-6" />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-1">
+              <h3 className="text-lg font-bold text-coral-900 mb-1">
                 {todaySchedule.holidayTitle || 'Holiday'}
               </h3>
-              <p className="text-sm text-slate-700 dark:text-slate-400">
+              <p className="text-sm text-coral-700">
                 {todaySchedule.scheduleNote || 'Regular recurring timetable classes are suspended for today.'}
               </p>
             </div>
@@ -109,7 +109,7 @@ export default async function DashboardPage() {
         {/* Focus Cards: Current & Next */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {/* Card 1: Current Class */}
-          <div className="p-6 rounded-xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+          <div className="p-6 rounded-xl border border-slate-400/30 bg-slate-200 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[160px]">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-bold tracking-widest text-slate-600 uppercase">
                 Current Class
@@ -157,7 +157,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Card 2: Next Class */}
-          <div className="p-6 rounded-xl border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[160px]">
+          <div className="p-6 rounded-xl border border-slate-400/20 bg-slate-100 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[160px]">
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-bold tracking-widest text-slate-500 uppercase">
                 Next Up
@@ -284,28 +284,28 @@ export default async function DashboardPage() {
         {/* Academic Calendar Events */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
-            <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 tracking-tight uppercase">Upcoming Holidays</h4>
+            <h4 className="text-sm font-bold text-coral-500 mb-4 tracking-tight uppercase">Upcoming Holidays</h4>
             {todaySchedule.upcomingHolidays.length === 0 ? (
               <p className="text-sm text-slate-500 dark:text-slate-400">No upcoming holidays.</p>
             ) : (
               <ul className="space-y-3 text-sm">
                 {todaySchedule.upcomingHolidays.map(h => (
-                  <li key={h.id} className="flex justify-between items-center border-b border-slate-200/50 dark:border-slate-800/50 pb-2 last:border-0 last:pb-0">
-                    <span className="font-semibold text-slate-800 dark:text-slate-100">{h.title}</span>
-                    <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">{h.event_date}</span>
+                  <li key={h.id} className="flex justify-between items-center border-b border-coral-200/50 dark:border-coral-900/50 pb-2 last:border-0 last:pb-0">
+                    <span className="font-semibold text-coral-900 dark:text-coral-100">{h.title}</span>
+                    <span className="text-coral-700 dark:text-coral-300 text-xs font-medium">{h.event_date}</span>
                   </li>
                 ))}
               </ul>
             )}
           </div>
           <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
-            <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 tracking-tight uppercase">Academic Events</h4>
+            <h4 className="text-sm font-bold text-coral-400 mb-4 tracking-tight uppercase">Academic Events</h4>
             {todaySchedule.upcomingEvents.length === 0 ? (
               <p className="text-sm text-slate-500 dark:text-slate-400">No academic events registered.</p>
             ) : (
               <ul className="space-y-3 text-sm">
                 {todaySchedule.upcomingEvents.map(ev => (
-                  <li key={ev.id} className="flex justify-between items-center border-b border-slate-200/50 dark:border-slate-800/50 pb-2 last:border-0 last:pb-0">
+                  <li key={ev.id} className="flex justify-between items-center border-b border-slate-400/20 pb-2 last:border-0 last:pb-0">
                     <span className="font-semibold text-slate-800 dark:text-slate-100">{ev.title}</span>
                     <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">{ev.event_date}</span>
                   </li>
