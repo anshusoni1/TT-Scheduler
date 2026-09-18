@@ -4,6 +4,8 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 function loadEnvLocalKey(): string | undefined {
+  if (process.env.RUN_LIVE_TESTS !== 'true') return undefined;
+  
   if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
   try {
     const envContent = fs.readFileSync(path.resolve(process.cwd(), '.env.local'), 'utf-8');

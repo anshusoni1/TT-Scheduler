@@ -20,6 +20,8 @@ import type {
 } from '@/types/database';
 
 function loadEnvLocalKey(): string | undefined {
+  if (process.env.RUN_LIVE_TESTS !== 'true') return undefined;
+  
   if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
   try {
     const envContent = fs.readFileSync(path.resolve(process.cwd(), '.env.local'), 'utf-8');
@@ -274,6 +276,7 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
         [], // No user exceptions
         [],
         [],
+        [],
         'friday',
         '2026-10-02',
         '10:00:00',
@@ -294,6 +297,7 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
         mockTimetable,
         mockCalendar,
         [mockCalendar.events[1]], // Working Saturday observing monday
+        [],
         [],
         [],
         [],
@@ -373,6 +377,7 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
         [],
         [],
         [],
+        [],
         'monday',
         '2026-09-07',
         '09:30:00',
@@ -447,6 +452,7 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
         [cancellationException],
         [],
         [],
+        [],
         'monday',
         '2026-09-07',
         '08:00:00',
@@ -462,6 +468,7 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
         null,
         [],
         [], // No exception for 2026-09-14
+        [],
         [],
         [],
         'monday',

@@ -386,4 +386,24 @@ export class CalendarsRepository {
 
     return data || [];
   }
+
+  async getUpcomingExams(userId: string, fromDate: string, limit = 5): Promise<CalendarEvent[]> {
+    const activeCalendar = await this.getActiveCalendar(userId);
+    if (!activeCalendar) return [];
+
+    const { data, error } = await this.supabase
+      .from('calendar_events')
+      .select('id, calendar_id, event_date, event_type, title, description, is_teaching_day, is_holiday, affects_regular_schedule, metadata, created_at, updated_at')
+      .eq('calendar_id', activeCalendar.id)
+      .gte('event_date', fromDate)
+      .or('event_type.eq.exam,title.ilike.%exam%')
+      .order('event_date', { ascending: true })
+      .limit(limit);
+
+    if (error) {
+      throw new AppError(`Failed to fetch upcoming exams: ${error.message}`, 'INTERNAL_ERROR', 500, error);
+    }
+
+    return data || [];
+  }
 }

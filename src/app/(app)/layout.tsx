@@ -1,5 +1,5 @@
 import { TopNav } from '@/components/TopNav';
-
+import { AIAssistantFAB } from '@/components/AIAssistantFAB';
 export default function AppLayout({
   children,
 }: {
@@ -15,6 +15,7 @@ export default function AppLayout({
         <p className="text-slate-800 dark:text-slate-200 font-semibold mb-1">NxtBell</p>
         <p>Built by Anshu Soni</p>
       </footer>
+      <AIAssistantFAB />
     </div>
   );
 }

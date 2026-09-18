@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { AIAssistantFAB } from '@/components/AIAssistantFAB';
 
 export const metadata: Metadata = {
   title: 'NxtBell | Academic Schedule & Timetable Intelligence',
@@ -31,7 +30,6 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-background text-foreground transition-colors duration-200">
         {children}
-        <AIAssistantFAB />
       </body>
     </html>
   );
