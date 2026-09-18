@@ -62,7 +62,7 @@ describe('AcademicAssistantService & NotificationService', () => {
         holidayTitle: null,
         todayEvents: [],
         upcomingHolidays: [],
-        upcomingEvents: [],
+        upcomingEvents: [], upcomingExams: [],
         todayClasses: [
           {
             id: 'entry-1',
@@ -109,7 +109,7 @@ describe('AcademicAssistantService & NotificationService', () => {
         holidayTitle: 'Gandhi Jayanti',
         todayEvents: [],
         upcomingHolidays: [],
-        upcomingEvents: [],
+        upcomingEvents: [], upcomingExams: [],
         todayClasses: [],
         currentClass: null,
         nextClass: null,

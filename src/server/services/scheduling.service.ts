@@ -77,6 +77,7 @@ export interface TodayScheduleResult {
   todayEvents: CalendarEvent[];
   upcomingHolidays: CalendarEvent[];
   upcomingEvents: CalendarEvent[];
+  upcomingExams: CalendarEvent[];
   todayClasses: TodayScheduleClass[];
   currentClass: TodayScheduleClass | null;
   nextClass: NextClassInfo | null;
@@ -167,10 +168,11 @@ export class SchedulingService {
       getCurrentDateTimeInTimezone(timezone, referenceDate);
 
     // Fetch date-specific exceptions and upcoming calendar items in parallel
-    const [todayExceptions, upcomingHolidays, upcomingEvents] = await Promise.all([
+    const [todayExceptions, upcomingHolidays, upcomingEvents, upcomingExams] = await Promise.all([
       exceptionsRepo.getExceptionsForDate(userId, dateString),
       activeCalendar ? calendarsRepo.getUpcomingHolidays(userId, dateString, 3) : Promise.resolve([]),
       activeCalendar ? calendarsRepo.getUpcomingEvents(userId, dateString, 3) : Promise.resolve([]),
+      activeCalendar ? calendarsRepo.getUpcomingExams(userId, dateString, 3) : Promise.resolve([]),
     ]);
 
     // Events for today from active calendar
@@ -185,6 +187,7 @@ export class SchedulingService {
       todayExceptions,
       upcomingHolidays,
       upcomingEvents,
+      upcomingExams,
       dayOfWeek,
       dateString,
       timeString,
@@ -213,6 +216,7 @@ export class SchedulingService {
       [],
       [],
       [],
+      [],
       dayOfWeek,
       dateString,
       timeString,
@@ -236,6 +240,7 @@ export class SchedulingService {
     todayExceptions: ScheduleException[],
     upcomingHolidays: CalendarEvent[],
     upcomingEvents: CalendarEvent[],
+    upcomingExams: CalendarEvent[],
     dayOfWeek: DayOfWeek,
     dateString: string,
     timeString: string,
@@ -509,6 +514,7 @@ export class SchedulingService {
       todayEvents,
       upcomingHolidays,
       upcomingEvents,
+      upcomingExams,
       todayClasses,
       currentClass,
       nextClass,
@@ -560,6 +566,7 @@ export class SchedulingService {
         calendar,
         dayEvents,
         dayExceptions,
+        [],
         [],
         [],
         dayOfWeek,

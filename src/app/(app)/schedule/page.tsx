@@ -19,12 +19,13 @@ import {
 import {
   getWeekRangeForDate,
   addDaysToDate,
+  getCurrentDateTimeInTimezone,
 } from '@/lib/dates';
 import type { SynthesizedDaySchedule } from '@/server/services/scheduling.service';
 import type { ApiResponse } from '@/types/api';
 
 export default function WeeklySchedulePage() {
-  const todayStr = new Date().toISOString().slice(0, 10);
+  const todayStr = getCurrentDateTimeInTimezone().dateString;
   const [selectedDate, setSelectedDate] = useState<string>(todayStr);
   const [startOfWeek, setStartOfWeek] = useState<string>(
     getWeekRangeForDate(todayStr).startOfWeek

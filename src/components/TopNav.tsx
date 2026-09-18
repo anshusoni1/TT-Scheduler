@@ -29,10 +29,11 @@ export async function TopNav() {
       <div className="flex items-center gap-4">
         <MobileNav />
         <Link href="/dashboard" className="flex items-center gap-2 group">
-          <Image src="/logo.png" alt="NxtBell Logo" width={24} height={24} className="h-6 w-6 rounded-md object-contain" />
-          <h1 className="text-lg font-bold text-slate-950 dark:text-white tracking-tight">
-            NxtBell
-          </h1>
+          <Image src="/logo-mark.png" alt="NxtBell Icon" width={31} height={31} className="h-8 w-auto object-contain" />
+          <span className="text-[24px] font-bold tracking-tight">
+            <span className="text-slate-900 dark:text-white">Nxt</span>
+            <span className="text-coral-500">Bell</span>
+          </span>
         </Link>
       </div>
 

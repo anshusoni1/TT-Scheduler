@@ -29,6 +29,17 @@ export default async function DashboardPage() {
   const studentName = profile?.name || user.user_metadata?.name || 'Student';
   const timezone = profile?.timezone || 'Asia/Kolkata';
 
+  const getDaysLeftText = (eventDate: string) => {
+    const current = new Date(todaySchedule.dateString);
+    const target = new Date(eventDate);
+    const diffDays = Math.round((target.getTime() - current.getTime()) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) return null;
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Tomorrow';
+    return `${diffDays} days left`;
+  };
+
   return (
     <div className="flex flex-col">
       <main className="flex-1 max-w-5xl w-full mx-auto px-6 py-12">
@@ -280,7 +291,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Academic Calendar Events */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
             <h4 className="text-sm font-bold text-coral-500 mb-4 tracking-tight uppercase">Upcoming Holidays</h4>
             {todaySchedule.upcomingHolidays.length === 0 ? (
@@ -308,6 +319,29 @@ export default async function DashboardPage() {
                     <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">{ev.event_date}</span>
                   </li>
                 ))}
+              </ul>
+            )}
+          </div>
+          <div className="p-6 rounded-lg border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800">
+            <h4 className="text-sm font-bold text-coral-500 mb-4 tracking-tight uppercase">Upcoming Examinations</h4>
+            {todaySchedule.upcomingExams.length === 0 ? (
+              <p className="text-sm text-slate-500 dark:text-slate-400">No upcoming examinations.</p>
+            ) : (
+              <ul className="space-y-3 text-sm">
+                {todaySchedule.upcomingExams.map(ex => {
+                  const daysLeft = getDaysLeftText(ex.event_date);
+                  if (daysLeft === null) return null; // Past exams safety fallback
+
+                  return (
+                    <li key={ex.id} className="flex justify-between items-center border-b border-slate-400/20 pb-2 last:border-0 last:pb-0">
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-slate-800 dark:text-slate-100">{ex.title}</span>
+                        <span className="text-coral-500 dark:text-coral-400 text-xs font-semibold mt-0.5">{daysLeft}</span>
+                      </div>
+                      <span className="text-slate-600 dark:text-slate-400 text-xs font-medium">{ex.event_date}</span>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

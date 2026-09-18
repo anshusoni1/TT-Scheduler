@@ -15,9 +15,12 @@ export default async function HomePage() {
     <div className="flex-1 flex flex-col justify-between">
       {/* Header */}
       <header className="border-b border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Image src="/logo.png" alt="NxtBell Logo" width={36} height={36} className="h-9 w-9 rounded-xl object-contain" />
-          <span className="text-lg font-bold text-slate-950 dark:text-white tracking-tight">NxtBell</span>
+        <div className="flex items-center gap-2 group">
+          <Image src="/logo-mark.png" alt="NxtBell Icon" width={40} height={40} className="h-10 w-auto object-contain" />
+          <span className="text-3xl font-bold tracking-tight">
+            <span className="text-slate-900 dark:text-white">Nxt</span>
+            <span className="text-coral-500">Bell</span>
+          </span>
         </div>
         <div className="flex items-center gap-3">
           <Link
