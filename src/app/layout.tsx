@@ -3,7 +3,7 @@ import './globals.css';
 import { AIAssistantFAB } from '@/components/AIAssistantFAB';
 
 export const metadata: Metadata = {
-  title: 'ClassFlow | Academic Schedule & Timetable Intelligence',
+  title: 'NxtBell | Academic Schedule & Timetable Intelligence',
   description: 'Production-grade academic schedule and calendar management platform for college students.',
 };
 

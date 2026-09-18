@@ -15,8 +15,12 @@ import {
   AlertCircle,
   CheckCircle2,
   Loader2,
+  Settings,
   Shield,
+  Lock,
+  DownloadCloud,
 } from 'lucide-react';
+import { ExportICSButton } from '@/components/ExportICSButton';
 import type { Profile, AcademicYear } from '@/types/database';
 import type { ApiResponse } from '@/types/api';
 
@@ -500,6 +504,48 @@ export default function SettingsPage() {
                     </button>
                   </div>
                 )}
+              </div>
+
+              {/* Static Export Card */}
+              <div className="p-6 md:p-8 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+                <div className="flex items-center gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+                  <DownloadCloud className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                  <h3 className="text-lg font-bold text-slate-950 dark:text-slate-100 tracking-tight">Static ICS Export</h3>
+                </div>
+
+                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
+                  Download static .ics files for your calendar app. These won&apos;t auto-update if your schedule changes.
+                </p>
+
+                <div className="space-y-3">
+                  <ExportICSButton
+                    endpoint="/api/schedule/export/timetable"
+                    filename="nxtbell-timetable.ics"
+                    label="Export Timetable (.ICS)"
+                    icon="download"
+                    disabled={!academicYears.some(ay => ay.is_active)}
+                    disabledTooltip="Please configure an academic year first"
+                    className={`w-full py-3 px-4 rounded-xl text-sm font-bold transition-colors shadow-sm flex items-center justify-center gap-2 ${
+                      academicYears.some(ay => ay.is_active)
+                        ? 'bg-slate-950 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-950'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
+                    }`}
+                  />
+
+                  <ExportICSButton
+                    endpoint="/api/schedule/export/academic-calendar"
+                    filename="nxtbell-academic-calendar.ics"
+                    label="Export Academic Calendar (.ICS)"
+                    icon="download-cloud"
+                    disabled={!academicYears.some(ay => ay.is_active)}
+                    disabledTooltip="Please configure an academic year first"
+                    className={`w-full py-3 px-4 rounded-xl text-sm font-bold transition-colors shadow-sm flex items-center justify-center gap-2 ${
+                      academicYears.some(ay => ay.is_active)
+                        ? 'bg-white dark:bg-slate-950 hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200'
+                        : 'bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
+                    }`}
+                  />
+                </div>
               </div>
 
               {/* Privacy & Security Card */}

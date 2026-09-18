@@ -116,8 +116,8 @@ export async function GET(
     }
 
     const calendarTitle = activeTimetable?.name
-      ? `ClassFlow - ${activeTimetable.name}`
-      : 'ClassFlow Academic Schedule Feed';
+      ? `NxtBell - ${activeTimetable.name}`
+      : 'NxtBell Academic Schedule Feed';
 
     const icsString = generateICalendar(calendarTitle, icalEvents, 'Asia/Kolkata');
 
@@ -126,7 +126,7 @@ export async function GET(
       headers: {
         'Content-Type': 'text/calendar; charset=utf-8',
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Content-Disposition': 'inline; filename="classflow-calendar.ics"',
+        'Content-Disposition': 'inline; filename="nxtbell-calendar.ics"',
       },
     });
   } catch (error) {

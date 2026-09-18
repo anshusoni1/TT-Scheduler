@@ -1,11 +1,10 @@
 import { NextRequest } from 'next/server';
 import { AuthService } from '@/server/services/auth.service';
 import { SchedulingService } from '@/server/services/scheduling.service';
-import { generateICalendar, type ICalEventInput } from '@/lib/ical';
+import { generateICalendar, type ICalEventInput, type ICalAlarmInput } from '@/lib/ical';
 import { handleApiError } from '@/lib/errors';
 import { getCurrentDateTimeInTimezone } from '@/lib/dates';
 import { CalendarsRepository } from '@/server/repositories/calendars.repository';
-import { TimetablesRepository } from '@/server/repositories/timetables.repository';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,12 +12,8 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const calendarsRepo = new CalendarsRepository(supabase);
-    const timetablesRepo = new TimetablesRepository(supabase);
 
-    const [activeCalendar, activeTimetable] = await Promise.all([
-      calendarsRepo.getActiveCalendar(user.id),
-      timetablesRepo.getActiveTimetable(user.id),
-    ]);
+    const activeCalendar = await calendarsRepo.getActiveCalendar(user.id);
 
     const now = getCurrentDateTimeInTimezone();
     let startDate = searchParams.get('from') || activeCalendar?.effective_from;
@@ -29,7 +24,7 @@ export async function GET(request: NextRequest) {
       const start = new Date(nowObj);
       start.setUTCDate(1);
       const end = new Date(nowObj);
-      end.setUTCMonth(end.getUTCMonth() + 4);
+      end.setUTCMonth(end.getUTCMonth() + 6);
       end.setUTCDate(28);
 
       startDate = startDate || start.toISOString().slice(0, 10);
@@ -44,38 +39,37 @@ export async function GET(request: NextRequest) {
     );
 
     const icalEvents: ICalEventInput[] = [];
+    const processedEventIds = new Set<string>();
 
     for (const day of synthesizedDays) {
-      // 1. Add class sessions
-      for (const cls of day.classes) {
-        const typeLabel = cls.class_type ? `[${cls.class_type.toUpperCase()}] ` : '';
-        const roomStr = cls.room ? `Room: ${cls.room}` : '';
-        const facultyStr = cls.faculty_name ? `Faculty: ${cls.faculty_name}` : '';
-        const sectionStr = cls.section ? `Section: ${cls.section}` : '';
-        const descParts = [
-          cls.subject_code ? `Code: ${cls.subject_code}` : '',
-          facultyStr,
-          roomStr,
-          sectionStr,
-          cls.notes ? `Notes: ${cls.notes}` : '',
-        ].filter(Boolean);
+      if (day.events && day.events.length > 0) {
+        for (const event of day.events) {
+          if (processedEventIds.has(event.id)) {
+            continue;
+          }
+          processedEventIds.add(event.id);
 
-        icalEvents.push({
-          uid: `cf-class-${cls.id}-${day.dateString}@classflow.app`,
-          summary: `${typeLabel}${cls.subject_name}`,
-          startDate: day.dateString,
-          startTime: cls.start_time,
-          endDate: day.dateString,
-          endTime: cls.end_time,
-          location: cls.room || undefined,
-          description: descParts.join('\n'),
-          timezone: now.dateString ? 'Asia/Kolkata' : undefined,
-          alarmMinutesBefore: 15,
-        });
-      }
+          const alarms: ICalAlarmInput[] = [];
+          if (event.event_type === 'exam') {
+            alarms.push({ trigger: '-P1W', description: `Reminder: ${event.title} is in 1 week` });
+            alarms.push({ trigger: '-P3D', description: `Reminder: ${event.title} is in 3 days` });
+            alarms.push({ trigger: '-P1D', description: `Reminder: ${event.title} is tomorrow` });
+          }
 
-      // 2. Add full-day holidays if present
-      if (day.isHoliday && day.holidayTitle) {
+          icalEvents.push({
+            uid: `cf-event-${event.id}@classflow.app`,
+            summary: event.title,
+            startDate: event.event_date,
+            startTime: '00:00:00',
+            endDate: event.event_date,
+            endTime: '23:59:59',
+            description: event.description || '',
+            timezone: 'Asia/Kolkata',
+            alarms: alarms,
+          });
+        }
+      } else if (day.isHoliday && day.holidayTitle) {
+        // Fallback for holidays that might not be in day.events but are synthesized
         icalEvents.push({
           uid: `cf-holiday-${day.dateString}@classflow.app`,
           summary: `Holiday: ${day.holidayTitle}`,
@@ -83,15 +77,15 @@ export async function GET(request: NextRequest) {
           startTime: '00:00:00',
           endDate: day.dateString,
           endTime: '23:59:59',
-          description: day.scheduleNote || 'Institutional Holiday - No Regular Classes',
-          alarmMinutesBefore: 0,
+          description: day.scheduleNote || 'Institutional Holiday',
+          timezone: 'Asia/Kolkata',
         });
       }
     }
 
-    const calendarTitle = activeTimetable?.name
-      ? `ClassFlow - ${activeTimetable.name}`
-      : 'ClassFlow Academic Schedule';
+    const calendarTitle = activeCalendar?.name
+      ? `NxtBell - ${activeCalendar.name} (Academic Calendar)`
+      : 'NxtBell Academic Calendar';
 
     const icsString = generateICalendar(calendarTitle, icalEvents, 'Asia/Kolkata');
 
@@ -99,7 +93,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'text/calendar; charset=utf-8',
-        'Content-Disposition': `attachment; filename="classflow-schedule.ics"`,
+        'Content-Disposition': `attachment; filename="nxtbell-academic-calendar.ics"`,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       },
     });

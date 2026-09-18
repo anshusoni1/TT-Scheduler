@@ -2,6 +2,7 @@ import { AuthService } from '@/server/services/auth.service';
 import { ProfilesRepository } from '@/server/repositories/profiles.repository';
 import { signOutAction } from '@/app/auth/actions';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   LogOut,
   LayoutDashboard,
@@ -28,8 +29,9 @@ export async function TopNav() {
       <div className="flex items-center gap-4">
         <MobileNav />
         <Link href="/dashboard" className="flex items-center gap-2 group">
+          <Image src="/logo.png" alt="NxtBell Logo" width={24} height={24} className="h-6 w-6 rounded-md object-contain" />
           <h1 className="text-lg font-bold text-slate-950 dark:text-white tracking-tight">
-            ClassFlow
+            NxtBell
           </h1>
         </Link>
       </div>

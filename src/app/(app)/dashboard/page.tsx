@@ -13,6 +13,7 @@ import {
   CalendarDays,
   Download,
 } from 'lucide-react';
+import { ExportICSButton } from '@/components/ExportICSButton';
 
 export default async function DashboardPage() {
   const { user, supabase } = await AuthService.requireUser();
@@ -63,15 +64,12 @@ export default async function DashboardPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="/api/schedule/export"
-              download="classflow-schedule.ics"
+            <ExportICSButton
+              endpoint="/api/schedule/export/timetable"
+              filename="nxtbell-timetable.ics"
+              label="Export .ICS"
               className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"
-              title="Download RFC 5545 iCalendar (.ics)"
-            >
-              <Download className="h-4 w-4" />
-              <span>Export .ICS</span>
-            </a>
+            />
             <Link
               href="/calendar"
               className="inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-400/40 hover:bg-slate-200/50 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors"

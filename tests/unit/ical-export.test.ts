@@ -40,7 +40,7 @@ describe('iCalendar (RFC 5545) Exporter', () => {
 
       expect(ics).toContain('BEGIN:VCALENDAR');
       expect(ics).toContain('VERSION:2.0');
-      expect(ics).toContain('PRODID:-//ClassFlow//Academic Schedule Manager//EN');
+      expect(ics).toContain('PRODID:-//NxtBell//Academic Schedule Manager//EN');
       expect(ics).toContain('CALSCALE:GREGORIAN');
       expect(ics).toContain('METHOD:PUBLISH');
       expect(ics).toContain('X-WR-CALNAME:ClassFlow Schedule');
@@ -59,6 +59,12 @@ describe('iCalendar (RFC 5545) Exporter', () => {
           startTime: '09:00',
           endDate: '2026-09-10',
           endTime: '10:30',
+          alarms: [
+            {
+              trigger: '-PT15M',
+              description: 'Reminder: Database Systems (CS301)',
+            }
+          ]
         },
       ];
 

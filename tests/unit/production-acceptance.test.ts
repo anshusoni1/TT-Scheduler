@@ -524,7 +524,9 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
           endTime: '10:00:00',
           location: 'Hall 101',
           description: 'Regular lecture by Dr. Rao',
-          alarmMinutesBefore: 15,
+          alarms: [
+            { trigger: '-PT15M', description: 'Reminder: Database Systems (Lecture)' }
+          ],
         },
         {
           uid: 'event-1',
@@ -534,7 +536,6 @@ describe('PRODUCTION ACCEPTANCE TEST SUITE (Tests 1 - 10)', () => {
           endDate: '2026-10-02',
           endTime: '23:59:59',
           description: 'National Holiday',
-          alarmMinutesBefore: 0,
         },
       ];
 

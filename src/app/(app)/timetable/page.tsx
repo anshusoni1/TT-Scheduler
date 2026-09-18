@@ -19,6 +19,7 @@ import {
   Grid,
   List,
 } from 'lucide-react';
+import { ExportICSButton } from '@/components/ExportICSButton';
 import type { DayOfWeek, ClassType, TimetableEntry } from '@/types/database';
 import { DAYS_OF_WEEK } from '@/lib/dates';
 import type { TimetableWithEntries } from '@/server/repositories/timetables.repository';
@@ -248,15 +249,12 @@ export default function TimetablePage() {
               </select>
             )}
 
-            <a
-              href="/api/schedule/export"
-              download="classflow-schedule.ics"
+            <ExportICSButton
+              endpoint="/api/schedule/export/timetable"
+              filename="nxtbell-timetable.ics"
+              label="Export .ICS"
               className="text-xs font-medium px-4 py-2 rounded-none border border-slate-400/30 text-slate-800 hover:bg-slate-200/50 transition-colors flex items-center gap-1.5"
-              title="Download iCalendar format (.ics)"
-            >
-              <Download className="h-3.5 w-3.5 text-slate-500" />
-              <span className="hidden sm:inline">Export .ICS</span>
-            </a>
+            />
             
             <button
               onClick={() => setShowNewTimetableModal(true)}

@@ -2,8 +2,9 @@
 
 import { useActionState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { signUpAction, type AuthActionResult } from '../actions';
-import { BookOpen, AlertCircle, ArrowRight } from 'lucide-react';
+import { AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function RegisterPage() {
   const [state, formAction, isPending] = useActionState<AuthActionResult | null, FormData>(
@@ -15,11 +16,9 @@ export default function RegisterPage() {
     <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-xl bg-slate-950 flex items-center justify-center text-white font-bold shadow-md shadow-coral-200 dark:shadow-none">
-            <BookOpen className="h-5 w-5" />
-          </div>
+          <Image src="/logo.png" alt="NxtBell Logo" width={36} height={36} className="h-9 w-9 rounded-xl object-contain" />
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">ClassFlow</h1>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">NxtBell</h1>
             <p className="text-xs text-slate-500 dark:text-slate-400">Student Account Registration</p>
           </div>
         </div>

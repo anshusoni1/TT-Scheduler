@@ -3,6 +3,11 @@
  * Enables synchronization with Google Calendar, Apple Calendar, and Outlook.
  */
 
+export interface ICalAlarmInput {
+  trigger: string;
+  description: string;
+}
+
 export interface ICalEventInput {
   uid: string;
   summary: string;
@@ -13,7 +18,7 @@ export interface ICalEventInput {
   description?: string | null;
   location?: string | null;
   timezone?: string;
-  alarmMinutesBefore?: number;
+  alarms?: ICalAlarmInput[];
 }
 
 /**
@@ -59,7 +64,7 @@ export function generateICalendar(
   const lines: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//ClassFlow//Academic Schedule Manager//EN',
+    'PRODID:-//NxtBell//Academic Schedule Manager//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     `X-WR-CALNAME:${escapeICalText(calendarTitle)}`,
@@ -85,14 +90,14 @@ export function generateICalendar(
       lines.push(`DESCRIPTION:${escapeICalText(event.description)}`);
     }
 
-    // 15-minute prior reminder alarm
-    const alarmMinutes = event.alarmMinutesBefore ?? 15;
-    if (alarmMinutes > 0) {
-      lines.push('BEGIN:VALARM');
-      lines.push(`TRIGGER:-PT${alarmMinutes}M`);
-      lines.push('ACTION:DISPLAY');
-      lines.push(`DESCRIPTION:${escapeICalText(`Reminder: ${event.summary}`)}`);
-      lines.push('END:VALARM');
+    if (event.alarms && event.alarms.length > 0) {
+      for (const alarm of event.alarms) {
+        lines.push('BEGIN:VALARM');
+        lines.push(`TRIGGER:${alarm.trigger}`);
+        lines.push('ACTION:DISPLAY');
+        lines.push(`DESCRIPTION:${escapeICalText(alarm.description)}`);
+        lines.push('END:VALARM');
+      }
     }
 
     lines.push('END:VEVENT');
