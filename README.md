@@ -1,16 +1,18 @@
-# ClassFlow (TT Scheduler)
+# NxtBell
 
-[🌐 Live Demo](https://classflow-rho-seven.vercel.app/)
+[🌐 Live Demo](https://nxtbell-16.vercel.app)
 
-ClassFlow is a modern, AI-powered academic scheduling platform built for students and educators. It automatically extracts and digitizes timetables and academic calendars from unstructured documents (images or PDFs) using the Gemini AI API, storing them securely in a Supabase PostgreSQL database.
+NxtBell is an AI-powered academic schedule management platform for students. It turns timetable and academic-calendar documents into a structured schedule, handles holidays and academic events, and helps students stay organized with their classes, attendance, examinations, and calendar exports.
 
 ## Features
 
-- **AI-Powered Extraction**: Upload a photo or PDF of your college timetable or academic calendar. ClassFlow uses Gemini (Gemini 1.5 Flash / 3.5 Flash) to parse complex grid layouts, merged lab sessions, and academic events automatically.
+- **AI-Powered Extraction**: Upload a photo or PDF of your college timetable or academic calendar. NxtBell uses Gemini (Gemini 1.5 Flash / 3.5 Flash) to parse complex grid layouts, merged lab sessions, and academic events automatically.
 - **Smart Validation**: The system flags overlapping classes, low-confidence extractions, and missing details (like room numbers or faculty) before you commit to the database.
 - **Interactive Review**: A rich UI to manually adjust, add, or delete any misclassified class slots or calendar events.
-- **Unified Dashboard**: View "Today's Classes", "Next Class", and upcoming academic events all in one clean interface.
+- **Unified Dashboard**: View "Today's Classes", "Next Class", upcoming examinations, academic events, and holidays all in one clean interface.
 - **Weekly Schedule View**: A comprehensive weekly grid and card view of your entire class schedule.
+- **Attendance**: Track attendance across different courses.
+- **Calendar Exports (ICS)**: Export your generated schedule and academic calendar as ICS files for native calendar integration.
 - **Authentication & Profiles**: Secure user authentication and profile management (timezone, college, branch, semester) powered by Supabase Auth.
 
 ## Tech Stack
@@ -84,11 +86,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the r
 2. **Upload Document**: Navigate to the Documents page and upload a picture of your class timetable or academic calendar.
 3. **AI Processing**: Wait a few moments while Gemini analyzes the document structure and extracts the class slots.
 4. **Review & Commit**: Review the extracted data. Fix any warnings (like missing rooms) and click "Confirm & Commit".
-5. **Dashboard**: Your dashboard will now automatically track your active classes and upcoming schedule.
+5. **Dashboard**: Your dashboard will now automatically track your active classes, upcoming examinations, and academic schedule.
 
 ## Testing
 
-ClassFlow includes unit tests and end-to-end (E2E) tests.
+NxtBell includes unit tests and end-to-end (E2E) tests.
 
 **Run unit tests:**
 ```bash
@@ -104,3 +106,4 @@ npx tsx e2e.ts
 ## License
 
 This project is licensed under the MIT License.
+Built by Anshu Soni.
