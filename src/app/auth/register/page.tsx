@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signUpAction, type AuthActionResult } from '../actions';
 import { AlertCircle, ArrowRight } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function RegisterPage() {
   const [state, formAction, isPending] = useActionState<AuthActionResult | null, FormData>(
@@ -13,11 +14,20 @@ export default function RegisterPage() {
   );
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
+    <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 relative">
+      <div className="absolute top-4 right-6">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <Image src="/logo-full.png" alt="NxtBell Logo" width={144} height={36} className="h-9 w-auto object-contain" />
-          <div>
+          <div className="flex items-center gap-2">
+            <Image src="/logo-mark.png" alt="NxtBell Icon" width={36} height={36} className="h-9 w-auto object-contain" />
+            <span className="text-2xl font-bold tracking-tight">
+              <span className="text-slate-900 dark:text-white">Nxt</span>
+              <span className="text-coral-500">Bell</span>
+            </span>
+          </div>
+          <div className="pl-3 border-l border-slate-200 dark:border-slate-800">
             <p className="text-xs text-slate-500 dark:text-slate-400">Student Account Registration</p>
           </div>
         </div>
