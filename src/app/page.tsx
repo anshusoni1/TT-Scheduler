@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { AuthService } from '@/server/services/auth.service';
 import { Calendar, ArrowRight, ShieldCheck, Cpu, Database } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default async function HomePage() {
   const { user } = await AuthService.getOptionalUser();
@@ -23,6 +24,7 @@ export default async function HomePage() {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/auth/login"
             className="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white px-3 py-1.5 transition-colors"

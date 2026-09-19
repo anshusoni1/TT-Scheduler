@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signInAction, type AuthActionResult } from '../actions';
 import { AlertCircle, ArrowRight } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState<AuthActionResult | null, FormData>(
@@ -13,7 +14,10 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center px-4 py-12">
+    <div className="flex-1 flex flex-col justify-center items-center px-4 py-12 relative">
+      <div className="absolute top-4 right-6">
+        <ThemeToggle />
+      </div>
       <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center gap-2">
